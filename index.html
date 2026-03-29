@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-AO">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>+244 Consultoria & Marketing — Estratégia. Branding. Angola.</title>
+  <meta name="description" content="+244 Consultoria & Marketing — Especialistas em consultoria estratégica, branding e marketing para o mercado angolano e internacional." />
+  <meta property="og:title" content="+244 Consultoria & Marketing" />
+  <meta property="og:description" content="Consultoria estratégica, branding e marketing para empresas que querem liderar em Angola." />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="pt_AO" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300;1,9..144,400&family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/main.css" />
+</head>
+<body>
+
+  <!-- Sections são carregadas dinamicamente via JS -->
+  <div id="site-header"></div>
+
+  <main id="site-main"></main>
+
+  <div id="site-footer"></div>
+
+  <button class="back-top" id="backTop" aria-label="Voltar ao topo">
+    <span class="arrow-up" aria-hidden="true"></span>
+  </button>
+
+  <script>
+    'use strict';
+
+    /* ============================================================
+       LOADER DE SECÇÕES
+       Para adicionar uma nova secção:
+       1. Cria o ficheiro em sections/nova-seccao.html
+       2. Adiciona o nome à lista mainSections abaixo
+    ============================================================ */
+
+    const headerSections = [
+      'header'
+    ];
+
+    const mainSections = [
+      'hero',
+      'sobre',
+      'servicos',
+      'angola',
+      'parceiros',
+      'eventos',
+      'portfolio',
+      'testemunhos',
+      'agendamento',
+      'contactos'
+    ];
+
+    const footerSections = [
+      'footer'
+    ];
+
+    async function loadSection(name) {
+      const res = await fetch('sections/' + name + '.html');
+      if (!res.ok) throw new Error('Erro ao carregar: ' + name);
+      return res.text();
+    }
+
+    async function loadAll() {
+      // Carregar header
+      const headerEl = document.getElementById('site-header');
+      for (const name of headerSections) {
+        headerEl.innerHTML += await loadSection(name);
+      }
+
+      // Carregar secções principais
+      const mainEl = document.getElementById('site-main');
+      for (const name of mainSections) {
+        mainEl.innerHTML += await loadSection(name);
+      }
+
+      // Carregar footer
+      const footerEl = document.getElementById('site-footer');
+      for (const name of footerSections) {
+        footerEl.innerHTML += await loadSection(name);
+      }
+
+      // Depois de carregar tudo, inicializar os scripts
+      initScripts();
+    }
+
+    function initScripts() {
+      const script = document.createElement('script');
+      script.src = 'js/main.js';
+      document.body.appendChild(script);
+    }
+
+    loadAll().catch(err => console.error(err));
+  </script>
+
+</body>
+</html>
