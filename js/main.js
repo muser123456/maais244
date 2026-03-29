@@ -1,5 +1,33 @@
     'use strict';
 
+    /* Hero slider */
+    (function() {
+      const INTERVAL = 5000;
+      const slides   = document.querySelectorAll('.hero-slide');
+      const contents = document.querySelectorAll('.hero-slide-content');
+      const dots     = document.querySelectorAll('.hero-dot');
+      if (!slides.length) return;
+      let current = 0, timer;
+
+      function goTo(i) {
+        slides[current].classList.remove('active');
+        contents[current].classList.remove('active');
+        dots[current].classList.remove('active');
+        current = (i + slides.length) % slides.length;
+        slides[current].classList.add('active');
+        contents[current].classList.add('active');
+        dots[current].classList.add('active');
+      }
+
+      function start() {
+        clearInterval(timer);
+        timer = setInterval(() => goTo(current + 1), INTERVAL);
+      }
+
+      dots.forEach((d, i) => d.addEventListener('click', () => { goTo(i); start(); }));
+      start();
+    })();
+
     /* Sticky header */
     (function() {
       const header = document.getElementById('header');
