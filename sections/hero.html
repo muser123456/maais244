@@ -2,40 +2,83 @@
          HERO
     ============================================================ -->
     <section id="hero" aria-labelledby="hero-title">
-      <div class="hero-bg" aria-hidden="true"></div>
+
+      <!-- Slides de fundo — adiciona as tuas imagens em img/hero-1.jpg, hero-2.jpg, hero-3.jpg -->
+      <div class="hero-slides" aria-hidden="true">
+        <div class="hero-slide active" style="background-image: url('img/hero-1.jpeg');"></div>
+        <div class="hero-slide" style="background-image: url('img/hero-2.jpeg');"></div>
+        <div class="hero-slide" style="background-image: url('img/hero-3.jpeg');"></div>
+      </div>
+      <div class="hero-overlay" aria-hidden="true"></div>
       <div class="hero-bg-lines" aria-hidden="true"></div>
 
       <div class="container">
         <div class="hero-content">
           <div class="hero-layout">
 
-            <div>
+            <!-- Lado esquerdo — texto que muda por slide -->
+            <div class="hero-text-wrap">
+
               <div class="hero-pretitle">
                 <span class="hero-location-tag">Luanda, Angola</span>
                 <span class="hero-pretitle-sep" aria-hidden="true"></span>
                 <span class="hero-pretitle-sub">Consultoria &amp; Marketing</span>
               </div>
 
-              <h1 class="hero-title reveal" id="hero-title">
-                Estratégia que<br>
-                <em>constrói</em> marcas<br>
-                de referência
-              </h1>
+              <!-- Slide 1 -->
+              <div class="hero-slide-content active">
+                <h1 class="hero-title" id="hero-title">
+                  Estratégia que<br>
+                  <em>constrói</em> marcas<br>
+                  de referência
+                </h1>
+                <p class="hero-desc">
+                  Somos especialistas em consultoria estratégica, branding e marketing para empresas que querem crescer com consistência no mercado angolano e além-fronteiras.
+                </p>
+              </div>
 
-              <p class="hero-desc reveal d1">
-                Somos especialistas em consultoria estratégica, branding e marketing para empresas que querem crescer com consistência no mercado angolano e além-fronteiras.
-              </p>
+              <!-- Slide 2 -->
+              <div class="hero-slide-content">
+                <h1 class="hero-title">
+                  Branding que<br>
+                  <em>diferencia</em> e<br>
+                  cria impacto
+                </h1>
+                <p class="hero-desc">
+                  Construímos identidades visuais e estratégias de marca que posicionam a sua empresa como referência no mercado angolano.
+                </p>
+              </div>
 
-              <div class="hero-actions reveal d2">
+              <!-- Slide 3 -->
+              <div class="hero-slide-content">
+                <h1 class="hero-title">
+                  O seu parceiro<br>
+                  para <em>entrar</em> e<br>
+                  liderar em Angola
+                </h1>
+                <p class="hero-desc">
+                  Conhecemos o mercado angolano como ninguém. Acompanhamos a sua empresa em cada etapa — da estratégia à execução.
+                </p>
+              </div>
+
+              <div class="hero-actions">
                 <a href="#agendamento" class="btn btn-primary">
                   Iniciar Projecto
                   <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </a>
                 <a href="#servicos" class="btn btn-outline">Ver Serviços</a>
               </div>
+
+              <!-- Dots indicadores -->
+              <div class="hero-dots" aria-label="Slides do hero">
+                <button class="hero-dot active" aria-label="Slide 1"></button>
+                <button class="hero-dot" aria-label="Slide 2"></button>
+                <button class="hero-dot" aria-label="Slide 3"></button>
+              </div>
+
             </div>
 
-            <!-- Right panel — expertise list -->
+            <!-- Lado direito — painel fixo -->
             <aside class="hero-panel reveal d3" aria-label="Áreas de especialidade">
               <p class="hero-panel-label">Especialidades</p>
               <ul class="hero-expertise-list" role="list">
@@ -85,4 +128,34 @@
         <div class="scroll-line"></div>
         <span>Scroll</span>
       </div>
+
+      <!-- Script do slider do hero -->
+      <script>
+        (function() {
+          const INTERVAL = 5000;
+          const slides    = document.querySelectorAll('.hero-slide');
+          const contents  = document.querySelectorAll('.hero-slide-content');
+          const dots      = document.querySelectorAll('.hero-dot');
+          let current = 0, timer;
+
+          function goTo(i) {
+            slides[current].classList.remove('active');
+            contents[current].classList.remove('active');
+            dots[current].classList.remove('active');
+            current = (i + slides.length) % slides.length;
+            slides[current].classList.add('active');
+            contents[current].classList.add('active');
+            dots[current].classList.add('active');
+          }
+
+          function start() {
+            clearInterval(timer);
+            timer = setInterval(() => goTo(current + 1), INTERVAL);
+          }
+
+          dots.forEach((d, i) => d.addEventListener('click', () => { goTo(i); start(); }));
+          start();
+        })();
+      </script>
+
     </section>
