@@ -811,7 +811,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: rgba(13,15,20,0.88);
+      background: rgba(13,15,20,0.75);
       z-index: 1;
     }
 
@@ -1598,9 +1598,15 @@
     .pf-item-1 { grid-column: span 2; }
     .pf-item-4 { grid-column: span 2; }
 
-    .pf-fill {
-      width: 100%; height: 100%;
-      background: linear-gradient(135deg, var(--ink-80), var(--navy));
+    .pf-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 400ms ease;
+    }
+    .pf-item:hover .pf-img {
+      transform: scale(1.04);
     }
     .pf-overlay {
       position: absolute;
