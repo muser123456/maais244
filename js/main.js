@@ -1,5 +1,35 @@
     'use strict';
 
+    /* Angola — counter animado */
+    (function() {
+      const cards = document.querySelectorAll('.angola-stat-num');
+      if (!cards.length) return;
+      let animated = false;
+
+      function animateCounters() {
+        if (animated) return;
+        animated = true;
+        cards.forEach(el => {
+          const target = parseInt(el.dataset.target, 10);
+          const duration = 1800;
+          const step = target / (duration / 16);
+          let current = 0;
+          const timer = setInterval(() => {
+            current += step;
+            if (current >= target) { current = target; clearInterval(timer); }
+            el.textContent = Math.floor(current);
+          }, 16);
+        });
+      }
+
+      const section = document.getElementById('angola');
+      if (!section || !window.IntersectionObserver) { animateCounters(); return; }
+      const io = new IntersectionObserver(entries => {
+        if (entries[0].isIntersecting) { animateCounters(); io.disconnect(); }
+      }, { threshold: 0.3 });
+      io.observe(section);
+    })();
+
     /* Hero slider */
     (function() {
       const INTERVAL = 5000;
