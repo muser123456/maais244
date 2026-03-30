@@ -1,5 +1,17 @@
     'use strict';
 
+    /* Angola — slider de fundo */
+    (function() {
+      const slides = document.querySelectorAll('.angola-slide');
+      if (!slides.length) return;
+      let current = 0;
+      setInterval(() => {
+        slides[current].classList.remove('active');
+        current = (current + 1) % slides.length;
+        slides[current].classList.add('active');
+      }, 5000);
+    })();
+
     /* Angola — counter animado */
     (function() {
       const cards = document.querySelectorAll('.angola-stat-num');
