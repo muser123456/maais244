@@ -229,9 +229,9 @@
 
     /* Logo imagem */
     .logo-img {
-      height: 52px;
+      height: 62px;
       width: auto;
-      max-width: 210px;
+      max-width: 280px;
       object-fit: contain;
       display: block;
     }
