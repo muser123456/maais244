@@ -1,5 +1,20 @@
     'use strict';
 
+    /* Eventos — animação de entrada escalonada */
+    (function() {
+      const cards = document.querySelectorAll('.evento-anim');
+      if (!cards.length || !window.IntersectionObserver) {
+        cards.forEach(c => c.classList.add('visible'));
+        return;
+      }
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+        });
+      }, { threshold: 0.15 });
+      cards.forEach(c => io.observe(c));
+    })();
+
     /* Angola — slider de fundo */
     (function() {
       const slides = document.querySelectorAll('.angola-slide');
