@@ -164,6 +164,17 @@
       goTo(0); startAuto();
     })();
 
+    /* MVV — toggle por toque em mobile */
+    (function() {
+      document.querySelectorAll('.mvv-item').forEach(item => {
+        item.addEventListener('click', () => {
+          const isOpen = item.classList.contains('open');
+          document.querySelectorAll('.mvv-item').forEach(i => i.classList.remove('open'));
+          if (!isOpen) item.classList.add('open');
+        });
+      });
+    })();
+
     /* Smooth anchors */
     document.querySelectorAll('a[href^="#"]').forEach(a => {
       a.addEventListener('click', function(e) {
