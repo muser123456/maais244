@@ -669,6 +669,14 @@
     }
     .mvv-item {
       padding: var(--sp-8) var(--sp-8);
+      border-radius: var(--r-4);
+      cursor: default;
+      transition: background 250ms ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .mvv-item:hover {
+      background: var(--stone-50);
     }
     .mvv-label {
       font-size: 0.65rem;
@@ -677,12 +685,38 @@
       text-transform: uppercase;
       color: var(--cobalt);
       margin-bottom: var(--sp-4);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .mvv-label::after {
+      content: '';
+      display: inline-block;
+      width: 14px;
+      height: 1px;
+      background: var(--cobalt);
+      opacity: 0.35;
+      transition: width 300ms ease, opacity 300ms ease;
+    }
+    .mvv-item:hover .mvv-label::after {
+      width: 0;
+      opacity: 0;
     }
     .mvv-text {
       font-size: 0.82rem;
       font-weight: 300;
       color: var(--stone-600);
       line-height: 1.65;
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      transition: max-height 400ms cubic-bezier(0.4, 0, 0.2, 1),
+                  opacity 350ms ease 80ms;
+    }
+    .mvv-item:hover .mvv-text,
+    .mvv-item.open .mvv-text {
+      max-height: 120px;
+      opacity: 1;
     }
 
     /* ============================================================
