@@ -1103,21 +1103,28 @@
       from { transform: translateX(0); }
       to   { transform: translateX(-50%); }
     }
+    .parceiros-track-wrap {
+      padding: 0 var(--sp-8);
+    }
     .parceiro-logo {
       flex-shrink: 0;
-      width: 240px;
-      height: 160px;
+      width: 220px;
+      height: 140px;
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 0;
-      border-left: 1px solid var(--stone-100);
+      margin: 0 10px;
+      border-radius: var(--r-8);
+      border: 1px solid var(--stone-150, #e8e8e8);
       position: relative;
       overflow: hidden;
-      transition: background 250ms ease;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+      transition: box-shadow 300ms ease, border-color 300ms ease;
     }
     .parceiro-logo:hover {
-      background: rgba(26,64,200,0.03);
+      box-shadow: 0 6px 24px rgba(26,64,200,0.10);
+      border-color: rgba(26,64,200,0.15);
     }
     .parceiro-img {
       width: 100%;
@@ -1127,7 +1134,7 @@
       display: block;
       filter: grayscale(100%) brightness(0.7);
       opacity: 0.5;
-      transition: filter 0ms linear, opacity 0ms linear, transform 300ms ease;
+      transition: filter 0ms linear, opacity 0ms linear, transform 350ms ease;
       will-change: filter, opacity;
     }
     .parceiro-logo:hover .parceiro-img {
