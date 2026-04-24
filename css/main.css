@@ -1105,12 +1105,12 @@
     }
     .parceiro-logo {
       flex-shrink: 0;
-      width: 180px;
-      height: 120px;
+      width: 240px;
+      height: 160px;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 20px 28px;
+      padding: 28px 36px;
       border-left: 1px solid var(--stone-100);
       position: relative;
       transition: background 250ms ease;
@@ -1119,8 +1119,8 @@
       background: rgba(26,64,200,0.03);
     }
     .parceiro-img {
-      max-width: 130px;
-      max-height: 72px;
+      max-width: 170px;
+      max-height: 100px;
       width: auto;
       height: auto;
       object-fit: contain;
@@ -1131,26 +1131,6 @@
     }
     .parceiro-logo:hover .parceiro-img {
       transform: scale(1.06);
-    }
-    .parceiro-img {
-      max-width: 100px;
-      max-height: 72px;
-      width: auto;
-      height: auto;
-      object-fit: contain;
-      filter: grayscale(100%);
-      opacity: 0.5;
-      transition: filter 300ms ease, opacity 300ms ease;
-    }
-    .parceiro-img {
-      max-width: 110px;
-      max-height: 48px;
-      width: auto;
-      height: auto;
-      object-fit: contain;
-      filter: grayscale(100%);
-      opacity: 0.55;
-      transition: filter 300ms ease, opacity 300ms ease;
     }
 
     /* ============================================================
