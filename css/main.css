@@ -1060,7 +1060,7 @@
        SECTION: PARCEIROS
     ============================================================ */
     #parceiros {
-      padding: var(--sp-40) 0;
+      padding: var(--sp-48) 0;
       background: var(--white);
       border-top: 1px solid var(--stone-100);
       border-bottom: 1px solid var(--stone-100);
@@ -1072,19 +1072,29 @@
       letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--stone-300);
-      margin-bottom: var(--sp-24);
+      margin-bottom: var(--sp-28);
     }
     .parceiros-track-wrap {
       overflow: hidden;
-      mask-image: linear-gradient(90deg, transparent 0%, black 10%, black 90%, transparent 100%);
-      -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 10%, black 90%, transparent 100%);
+      position: relative;
+      mask-image: linear-gradient(90deg,
+        transparent 0%,
+        black 14%,
+        black 86%,
+        transparent 100%);
+      -webkit-mask-image: linear-gradient(90deg,
+        transparent 0%,
+        black 14%,
+        black 86%,
+        transparent 100%);
     }
     .parceiros-track {
       display: flex;
       align-items: center;
       gap: 0;
-      animation: parceiros-scroll 42s linear infinite;
+      animation: parceiros-scroll 48s linear infinite;
       width: max-content;
+      will-change: transform;
     }
     .parceiros-track:hover {
       animation-play-state: paused;
@@ -1095,33 +1105,32 @@
     }
     .parceiro-logo {
       flex-shrink: 0;
-      width: 160px;
-      height: 100px;
+      width: 180px;
+      height: 120px;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: var(--sp-16) var(--sp-20);
+      padding: 20px 28px;
       border-left: 1px solid var(--stone-100);
       position: relative;
       transition: background 250ms ease;
     }
     .parceiro-logo:hover {
-      background: var(--stone-50);
-    }
-    .parceiro-logo:hover .parceiro-img {
-      filter: grayscale(0%);
-      opacity: 1;
-      transform: scale(1.05);
+      background: rgba(26,64,200,0.03);
     }
     .parceiro-img {
-      max-width: 110px;
-      max-height: 56px;
+      max-width: 130px;
+      max-height: 72px;
       width: auto;
       height: auto;
       object-fit: contain;
-      filter: grayscale(100%);
-      opacity: 0.45;
-      transition: filter 350ms ease, opacity 350ms ease, transform 350ms ease;
+      filter: grayscale(100%) brightness(0.7);
+      opacity: 0.5;
+      transition: filter 0ms linear, opacity 0ms linear, transform 300ms ease;
+      will-change: filter, opacity;
+    }
+    .parceiro-logo:hover .parceiro-img {
+      transform: scale(1.06);
     }
     .parceiro-img {
       max-width: 100px;
