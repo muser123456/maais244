@@ -1060,44 +1060,78 @@
        SECTION: PARCEIROS
     ============================================================ */
     #parceiros {
-      padding: var(--sp-48) 0;
+      padding: var(--sp-40) 0;
       background: var(--white);
       border-top: 1px solid var(--stone-100);
       border-bottom: 1px solid var(--stone-100);
     }
     .parceiros-label {
       text-align: center;
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.14em;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--stone-400);
+      color: var(--stone-300);
       margin-bottom: var(--sp-24);
     }
-    .parceiros-grid {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 1px;
-      background: var(--stone-100);
-      border: 1px solid var(--stone-100);
-      border-radius: var(--r-8);
+    .parceiros-track-wrap {
       overflow: hidden;
+      mask-image: linear-gradient(90deg, transparent 0%, black 10%, black 90%, transparent 100%);
+      -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 10%, black 90%, transparent 100%);
     }
-    .parceiro-card {
-      background: var(--white);
+    .parceiros-track {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      animation: parceiros-scroll 42s linear infinite;
+      width: max-content;
+    }
+    .parceiros-track:hover {
+      animation-play-state: paused;
+    }
+    @keyframes parceiros-scroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .parceiro-logo {
+      flex-shrink: 0;
+      width: 160px;
+      height: 100px;
       display: flex;
       align-items: center;
       justify-content: center;
       padding: var(--sp-16) var(--sp-20);
-      height: 88px;
-      transition: background 220ms ease;
+      border-left: 1px solid var(--stone-100);
+      position: relative;
+      transition: background 250ms ease;
     }
-    .parceiro-card:hover {
+    .parceiro-logo:hover {
       background: var(--stone-50);
     }
-    .parceiro-card:hover .parceiro-img {
-      filter: none;
+    .parceiro-logo:hover .parceiro-img {
+      filter: grayscale(0%);
       opacity: 1;
+      transform: scale(1.05);
+    }
+    .parceiro-img {
+      max-width: 110px;
+      max-height: 56px;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      filter: grayscale(100%);
+      opacity: 0.45;
+      transition: filter 350ms ease, opacity 350ms ease, transform 350ms ease;
+    }
+    .parceiro-img {
+      max-width: 100px;
+      max-height: 72px;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      filter: grayscale(100%);
+      opacity: 0.5;
+      transition: filter 300ms ease, opacity 300ms ease;
     }
     .parceiro-img {
       max-width: 110px;
@@ -1680,8 +1714,6 @@
     }
     @media (max-width: 768px) {
       .eventos-grid { grid-template-columns: 1fr; }
-      .parceiros-grid { grid-template-columns: repeat(2, 1fr); }
-      .parceiro-card { height: 72px; }
     }
 
     /* ============================================================
@@ -1773,7 +1805,6 @@
       .servicos-grid { grid-template-columns: repeat(2, 1fr); }
       .angola-layout { grid-template-columns: 1fr; }
       .angola-panel { display: none; }
-      .parceiros-grid { grid-template-columns: repeat(3, 1fr); }
       .testemunhos-header { grid-template-columns: 1fr; gap: var(--sp-8); }
       .agendamento-layout { grid-template-columns: 1fr; }
       .footer-grid { grid-template-columns: repeat(2, 1fr); }
@@ -1791,8 +1822,6 @@
       .form-row { grid-template-columns: 1fr; }
       .footer-grid { grid-template-columns: 1fr; }
       .eventos-grid { grid-template-columns: 1fr; }
-      .parceiros-grid { grid-template-columns: repeat(2, 1fr); }
-      .parceiro-card { height: 72px; }
       .portfolio-grid { grid-template-columns: 1fr; }
       .pf-item-1, .pf-item-4 { grid-column: span 1; }
       .portfolio-intro { flex-direction: column; align-items: flex-start; }
