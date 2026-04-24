@@ -164,6 +164,47 @@
       goTo(0); startAuto();
     })();
 
+
+    /* ── Parceiros: cor viva no centro, cinzento nas bordas ── */
+    (function () {
+      const wrap = document.querySelector('.parceiros-track-wrap');
+      const imgs = document.querySelectorAll('.parceiro-img');
+      if (!wrap || !imgs.length) return;
+
+      const wrapW   = wrap.getBoundingClientRect().width;
+      const centerX = wrapW / 2;
+      // Zona "viva" = 30% do centro para cada lado
+      const liveZone  = wrapW * 0.28;
+      // Zona de fade = mais 22% para cada lado
+      const fadeZone  = wrapW * 0.22;
+
+      function tick() {
+        imgs.forEach(img => {
+          const rect = img.getBoundingClientRect();
+          const wrapRect = wrap.getBoundingClientRect();
+          const imgCX = rect.left - wrapRect.left + rect.width / 2;
+          const dist  = Math.abs(imgCX - centerX);
+
+          let t; // 0 = cores vivas, 1 = cinzento total
+          if (dist <= liveZone) {
+            t = 0;
+          } else if (dist <= liveZone + fadeZone) {
+            t = (dist - liveZone) / fadeZone;
+          } else {
+            t = 1;
+          }
+
+          const grayscale = Math.round(t * 100);
+          const brightness = 1 - t * 0.3;
+          const opacity    = 1 - t * 0.55;
+          img.style.filter  = `grayscale(${grayscale}%) brightness(${brightness})`;
+          img.style.opacity = opacity;
+        });
+        requestAnimationFrame(tick);
+      }
+      tick();
+    })();
+
     /* MVV — toggle por toque em mobile */
     (function() {
       document.querySelectorAll('.mvv-item').forEach(item => {
