@@ -1060,19 +1060,34 @@
        SECTION: PARCEIROS
     ============================================================ */
     #parceiros {
-      padding: var(--sp-48) 0;
+      padding: var(--sp-48) 0 var(--sp-40);
       background: var(--white);
       border-top: 1px solid var(--stone-100);
       border-bottom: 1px solid var(--stone-100);
     }
-    .parceiros-label {
+    .parceiros-header {
       text-align: center;
-      font-size: 0.68rem;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--stone-300);
-      margin-bottom: var(--sp-28);
+      margin-bottom: var(--sp-32);
+    }
+    .parceiros-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 400;
+      line-height: 1.15;
+      color: var(--navy);
+      margin-bottom: var(--sp-8);
+    }
+    .parceiros-title em {
+      font-style: italic;
+      color: var(--cobalt);
+    }
+    .parceiros-sub {
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: var(--stone-500);
+      max-width: 380px;
+      margin: 0 auto;
+      line-height: 1.6;
     }
     .parceiros-track-wrap {
       overflow: hidden;
