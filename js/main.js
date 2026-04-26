@@ -205,6 +205,61 @@
       tick();
     })();
 
+
+    /* ── Serviços — card dinâmico 04/05 ── */
+    (function () {
+      const card    = document.querySelector('.servico-card.is-dynamic');
+      if (!card) return;
+
+      const panels  = card.querySelectorAll('.svc-panel');
+      const dots    = card.querySelectorAll('.svc-dot');
+      const fill    = card.querySelector('.svc-progress-fill');
+      const DURATION = 4000;
+      let current = 0, timer, startTime, raf;
+
+      function goTo(idx, resetProgress) {
+        if (idx === current && !resetProgress) return;
+        panels[current].classList.remove('is-visible');
+        panels[current].classList.add('is-leaving');
+        dots[current].classList.remove('is-active');
+        setTimeout(() => panels[(idx + panels.length) % panels.length - idx < 0
+          ? current : current].classList.remove('is-leaving'), 520);
+
+        current = idx % panels.length;
+        panels[current].classList.add('is-visible');
+        dots[current].classList.add('is-active');
+
+        // Reset progress bar
+        fill.style.transition = 'none';
+        fill.style.width = '0%';
+        clearTimeout(timer);
+        cancelAnimationFrame(raf);
+        requestAnimationFrame(() => {
+          fill.style.transition = `width ${DURATION}ms linear`;
+          fill.style.width = '100%';
+        });
+
+        timer = setTimeout(() => goTo((current + 1) % panels.length, true), DURATION);
+      }
+
+      // Dot click
+      dots.forEach((dot, i) => {
+        dot.addEventListener('click', () => goTo(i, true));
+      });
+
+      // Pause on hover
+      card.addEventListener('mouseenter', () => {
+        clearTimeout(timer);
+        fill.style.transition = 'none';
+      });
+      card.addEventListener('mouseleave', () => {
+        goTo((current + 1) % panels.length, true);
+      });
+
+      // Start
+      goTo(0, true);
+    })();
+
     /* MVV — toggle por toque em mobile */
     (function() {
       document.querySelectorAll('.mvv-item').forEach(item => {
