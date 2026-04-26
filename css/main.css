@@ -760,76 +760,72 @@
     }
 
     /* ══════════════════════════════════════
-       SERVIÇOS — grid premium 2×2
+       SERVIÇOS — matriz 2×2 pura
     ══════════════════════════════════════ */
     .servicos-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      grid-template-rows: auto;
+      grid-template-rows: 1fr 1fr;
       gap: 2px;
       background: rgba(255,255,255,.06);
       border-radius: 20px;
       overflow: hidden;
     }
 
-    /* ── Card base ── */
+    /* ── Todos os cards têm a mesma base ── */
     .servico-card {
       background: var(--ink-90);
-      padding: var(--sp-32) var(--sp-28);
+      padding: var(--sp-36) var(--sp-32);
       position: relative;
       display: flex;
       flex-direction: column;
-      gap: 0;
       overflow: hidden;
-      min-height: 320px;
-      transition: background 320ms ease;
-    }
-    .servico-card::after {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,.04), transparent);
+      min-height: 300px;
+      transition: background 280ms ease;
     }
     .servico-card:hover {
       background: var(--ink-80);
     }
 
-    /* ── Featured — coluna esquerda, span 2 linhas ── */
-    .servico-card.is-featured {
-      grid-row: span 2;
-      background: linear-gradient(150deg,
-        rgba(26,64,200,.22) 0%,
-        rgba(16,25,58,.6) 45%,
-        var(--ink-90) 100%);
-      padding: var(--sp-40) var(--sp-36);
-      min-height: 640px;
-      justify-content: flex-end;
-    }
-    .servico-card.is-featured::before {
+    /* Linha topo colorida ao hover */
+    .servico-card::before {
       content: '';
       position: absolute;
       top: 0; left: 0; right: 0;
       height: 2px;
-      background: linear-gradient(90deg, var(--cobalt) 0%, var(--cobalt-lt) 50%, transparent 100%);
+      background: linear-gradient(90deg, var(--cobalt), transparent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 350ms ease;
+    }
+    .servico-card:hover::before { transform: scaleX(1); }
+
+    /* Card 01 — destaque subtil */
+    .servico-card.is-featured {
+      background: linear-gradient(145deg,
+        rgba(26,64,200,.16) 0%,
+        var(--ink-90) 60%);
+    }
+    .servico-card.is-featured::before {
+      background: linear-gradient(90deg, var(--cobalt-lt), var(--cobalt), transparent);
+      transform: scaleX(1);
     }
     .servico-card.is-featured:hover {
-      background: linear-gradient(150deg,
-        rgba(26,64,200,.30) 0%,
-        rgba(16,25,58,.7) 45%,
-        var(--ink-90) 100%);
+      background: linear-gradient(145deg,
+        rgba(26,64,200,.24) 0%,
+        var(--ink-80) 60%);
     }
 
     /* Número watermark */
     .servico-bg-num {
       display: block;
       font-family: var(--font-display);
-      font-size: clamp(7rem, 14vw, 11rem);
+      font-size: 7rem;
       font-weight: 700;
       line-height: 1;
-      color: rgba(26,64,200,.07);
+      color: rgba(26,64,200,.06);
       position: absolute;
-      top: var(--sp-16);
+      bottom: var(--sp-12);
       right: var(--sp-20);
       user-select: none;
       pointer-events: none;
@@ -839,66 +835,50 @@
     .servico-top {
       display: flex;
       align-items: center;
-      gap: var(--sp-12);
-      margin-bottom: auto;
-    }
-    .servico-body-wrap {
-      margin-bottom: var(--sp-24);
+      gap: var(--sp-10);
+      margin-bottom: var(--sp-20);
     }
 
     .servico-index {
-      font-size: 0.60rem;
+      font-size: 0.58rem;
       font-weight: 700;
       letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--cobalt-lt);
-      opacity: 0.7;
-      margin-bottom: var(--sp-12);
-    }
-    .servico-card.is-featured .servico-index {
-      margin-bottom: 0;
+      opacity: 0.65;
     }
 
     .servico-name {
       font-family: var(--font-display);
+      font-size: 1.35rem;
       font-weight: 400;
       color: var(--white);
-      line-height: 1.15;
+      line-height: 1.2;
       margin-bottom: var(--sp-10);
-    }
-    .servico-card.is-featured .servico-name {
-      font-size: clamp(1.9rem, 3vw, 2.6rem);
-      margin-bottom: var(--sp-14);
-    }
-    .servico-card:not(.is-featured) .servico-name {
-      font-size: 1.08rem;
     }
 
     .servico-desc {
-      font-size: 0.85rem;
+      font-size: 0.83rem;
       font-weight: 300;
-      line-height: 1.72;
-      color: rgba(255,255,255,.40);
-    }
-    .servico-card.is-featured .servico-desc {
-      font-size: 0.95rem;
-      color: rgba(255,255,255,.50);
-      max-width: 360px;
+      line-height: 1.70;
+      color: rgba(255,255,255,.38);
+      margin-bottom: var(--sp-16);
+      flex: 1;
     }
 
     .servico-items {
       display: flex;
       flex-direction: column;
       gap: 0;
-      border-top: 1px solid rgba(255,255,255,.07);
+      border-top: 1px solid rgba(255,255,255,.06);
       padding-top: var(--sp-14);
-      margin-top: var(--sp-20);
+      margin-top: auto;
     }
     .servico-item {
-      font-size: 0.80rem;
+      font-size: 0.78rem;
       font-weight: 300;
-      color: rgba(255,255,255,.35);
-      padding: 8px 0 8px var(--sp-16);
+      color: rgba(255,255,255,.32);
+      padding: 7px 0 7px var(--sp-14);
       border-bottom: 1px solid rgba(255,255,255,.04);
       position: relative;
       transition: color 220ms ease, padding-left 220ms ease;
@@ -909,25 +889,19 @@
       position: absolute;
       left: 0; top: 50%;
       transform: translateY(-50%);
-      width: 6px; height: 1px;
+      width: 5px; height: 1px;
       background: var(--cobalt-lt);
-      opacity: 0.45;
+      opacity: 0.4;
       transition: width 220ms ease, opacity 220ms ease;
     }
-    .servico-card:hover .servico-item {
-      color: rgba(255,255,255,.58);
-      padding-left: calc(var(--sp-16) + 4px);
-    }
-    .servico-card:hover .servico-item::before {
-      width: 10px;
-      opacity: 1;
-    }
+    .servico-card:hover .servico-item { color: rgba(255,255,255,.56); }
+    .servico-card:hover .servico-item::before { width: 9px; opacity: 1; }
 
     .servico-tag {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      font-size: 0.58rem;
+      font-size: 0.57rem;
       font-weight: 700;
       letter-spacing: 0.14em;
       text-transform: uppercase;
@@ -946,62 +920,57 @@
       animation: pulse-gold 2s ease infinite;
     }
     @keyframes pulse-gold {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50%       { opacity: .4; transform: scale(.7); }
+      0%,100% { opacity:1; transform:scale(1); }
+      50%      { opacity:.3; transform:scale(.65); }
     }
 
-    /* ── Card dinâmico ── */
-    .servico-card.is-dynamic {
-      cursor: default;
-    }
+    /* ══ Card dinâmico — 4º slot ══ */
+    .servico-card.is-dynamic { cursor: default; }
 
-    /* Barra de progresso */
     .svc-progress-bar {
       position: absolute;
       top: 0; left: 0; right: 0;
       height: 2px;
       background: rgba(255,255,255,.06);
+      z-index: 2;
     }
     .svc-progress-fill {
       height: 100%;
       width: 0%;
       background: linear-gradient(90deg, var(--cobalt), var(--cobalt-lt));
-      transition: width linear;
       border-radius: 0 2px 2px 0;
     }
 
-    /* Dots indicadores */
     .svc-dots {
       position: absolute;
       bottom: var(--sp-16);
       right: var(--sp-20);
       display: flex;
       gap: 6px;
+      z-index: 2;
     }
     .svc-dot {
       width: 6px; height: 6px;
-      border-radius: 50%;
+      border-radius: 99px;
       border: none;
-      background: rgba(255,255,255,.2);
+      background: rgba(255,255,255,.18);
       cursor: pointer;
       padding: 0;
-      transition: background 250ms ease, transform 250ms ease, width 250ms ease;
-      border-radius: 99px;
+      transition: background 250ms, width 250ms;
     }
     .svc-dot.is-active {
       background: var(--cobalt-lt);
-      width: 18px;
+      width: 20px;
     }
 
-    /* Painéis dentro do card dinâmico */
     .svc-panel {
+      position: absolute;
+      inset: var(--sp-36) var(--sp-32) var(--sp-36) var(--sp-32);
       display: flex;
       flex-direction: column;
-      position: absolute;
-      inset: var(--sp-32) var(--sp-28) var(--sp-32) var(--sp-28);
       opacity: 0;
-      transform: translateY(12px);
-      transition: opacity 500ms ease, transform 500ms ease;
+      transform: translateY(14px);
+      transition: opacity 480ms ease, transform 480ms ease;
       pointer-events: none;
     }
     .svc-panel.is-visible {
@@ -1012,6 +981,7 @@
     .svc-panel.is-leaving {
       opacity: 0;
       transform: translateY(-10px);
+      transition: opacity 300ms ease, transform 300ms ease;
     }
 
     /* ============================================================
@@ -1997,7 +1967,6 @@
       .sobre-visual { display: none; }
       .servicos-intro { grid-template-columns: 1fr; gap: var(--sp-8); }
       .servicos-grid { grid-template-columns: 1fr; }
-      .servico-card.is-featured { grid-row: span 1; min-height: 420px; justify-content: flex-start; }
       .servico-card { min-height: 260px; }
       .svc-panel { inset: var(--sp-28) var(--sp-20); }
       .angola-layout { grid-template-columns: 1fr; }
@@ -2014,7 +1983,7 @@
       .nav-links, .nav-cta { display: none; }
       .hamburger { display: flex; }
       .servico-card.is-dynamic { min-height: 280px; }
-      .svc-panel { inset: var(--sp-20) var(--sp-16); }
+      .svc-panel { inset: var(--sp-24) var(--sp-20); }
       .mvv-row { grid-template-columns: 1fr; }
       .contactos-grid { grid-template-columns: 1fr; }
       .form-row { grid-template-columns: 1fr; }
