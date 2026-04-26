@@ -761,7 +761,7 @@
 
     .servicos-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       gap: 1px;
       background: rgba(255,255,255,.06);
       border: 1px solid rgba(255,255,255,.06);
@@ -778,6 +778,7 @@
       background: rgba(255,255,255,.03);
     }
     .servico-card.is-featured {
+      grid-column: span 2;
       background: rgba(26,64,200,.12);
     }
     .servico-card.is-featured:hover {
@@ -1834,6 +1835,7 @@
       .nav-links, .nav-cta { display: none; }
       .hamburger { display: flex; }
       .servicos-grid { grid-template-columns: 1fr; }
+      .servico-card.is-featured { grid-column: span 1; }
       .mvv-row { grid-template-columns: 1fr; }
       .contactos-grid { grid-template-columns: 1fr; }
       .form-row { grid-template-columns: 1fr; }
