@@ -208,57 +208,79 @@
 
     /* ── Serviços — card dinâmico 04/05 ── */
     (function () {
-      const card    = document.querySelector('.servico-card.is-dynamic');
+      const card     = document.querySelector('.servico-card.is-dynamic');
       if (!card) return;
 
-      const panels  = card.querySelectorAll('.svc-panel');
-      const dots    = card.querySelectorAll('.svc-dot');
-      const fill    = card.querySelector('.svc-progress-fill');
-      const DURATION = 4000;
-      let current = 0, timer, startTime, raf;
+      const panels   = card.querySelectorAll('.svc-panel');
+      const dots     = card.querySelectorAll('.svc-dot');
+      const fill     = card.querySelector('.svc-progress-fill');
+      const DURATION = 6000;   // 6 segundos
+      const LEAVE    = 500;    // duração do leave (ms)
+      let   current  = 0;
+      let   timer    = null;
+      let   paused   = false;
 
-      function goTo(idx, resetProgress) {
-        if (idx === current && !resetProgress) return;
-        panels[current].classList.remove('is-visible');
-        panels[current].classList.add('is-leaving');
-        dots[current].classList.remove('is-active');
-        setTimeout(() => panels[(idx + panels.length) % panels.length - idx < 0
-          ? current : current].classList.remove('is-leaving'), 520);
-
-        current = idx % panels.length;
-        panels[current].classList.add('is-visible');
-        dots[current].classList.add('is-active');
-
-        // Reset progress bar
+      function startProgress() {
         fill.style.transition = 'none';
         fill.style.width = '0%';
-        clearTimeout(timer);
-        cancelAnimationFrame(raf);
-        requestAnimationFrame(() => {
+        requestAnimationFrame(() => requestAnimationFrame(() => {
           fill.style.transition = `width ${DURATION}ms linear`;
           fill.style.width = '100%';
-        });
-
-        timer = setTimeout(() => goTo((current + 1) % panels.length, true), DURATION);
+        }));
       }
 
-      // Dot click
+      function goTo(idx) {
+        if (idx === current) return;
+        const prev = current;
+        current = idx;
+
+        // Saída do painel anterior
+        panels[prev].classList.remove('is-visible');
+        panels[prev].classList.add('is-leaving');
+        setTimeout(() => panels[prev].classList.remove('is-leaving'), LEAVE);
+
+        // Entrada do novo painel — ligeiro delay para crossfade
+        setTimeout(() => {
+          panels[current].classList.add('is-visible');
+        }, 80);
+
+        // Dots
+        dots[prev].classList.remove('is-active');
+        dots[current].classList.add('is-active');
+
+        // Progress
+        startProgress();
+        scheduleNext();
+      }
+
+      function scheduleNext() {
+        clearTimeout(timer);
+        if (!paused) {
+          timer = setTimeout(() => goTo((current + 1) % panels.length), DURATION);
+        }
+      }
+
+      // Clique nos dots
       dots.forEach((dot, i) => {
-        dot.addEventListener('click', () => goTo(i, true));
+        dot.addEventListener('click', () => { if (i !== current) goTo(i); });
       });
 
-      // Pause on hover
+      // Pause ao hover
       card.addEventListener('mouseenter', () => {
+        paused = true;
         clearTimeout(timer);
         fill.style.transition = 'none';
       });
       card.addEventListener('mouseleave', () => {
-        goTo((current + 1) % panels.length, true);
+        paused = false;
+        goTo((current + 1) % panels.length);
       });
 
-      // Start
-      goTo(0, true);
+      // Arranque
+      startProgress();
+      scheduleNext();
     })();
+
 
     /* MVV — toggle por toque em mobile */
     (function() {
