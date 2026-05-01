@@ -2,8 +2,9 @@
          SERVIÇOS
     ============================================================ -->
     <section id="servicos" aria-labelledby="servicos-title">
-      <div class="container" style="padding-top: var(--section-v); padding-bottom: var(--section-v);">
+      <div class="container servicos-container">
 
+        <!-- Cabeçalho -->
         <div class="servicos-intro">
           <div>
             <span class="eyebrow eyebrow-light reveal">Serviços</span>
@@ -17,100 +18,125 @@
           </p>
         </div>
 
-        <div class="servicos-grid reveal d2">
+        <!-- Grid de serviços -->
+        <div class="servicos-grid" role="list">
 
-          <!-- 01 -->
-          <article class="servico-card is-featured" aria-labelledby="svc-marketing">
-            <span class="servico-bg-num" aria-hidden="true">01</span>
-            <div class="servico-top">
-              <div class="servico-index">Serviço 01</div>
-              <span class="servico-tag">Mais procurado</span>
-            </div>
-            <h3 class="servico-name" id="svc-marketing">Outsourcing de Marketing</h3>
-            <p class="servico-desc">Visão estratégica e execução consistente — sem os custos de uma equipa interna a tempo inteiro.</p>
-            <ul class="servico-items" aria-label="O que inclui">
-              <li class="servico-item">Plano estratégico e comunicação</li>
-              <li class="servico-item">Cultura corporativa</li>
-              <li class="servico-item">Responsabilidade social empresarial</li>
-              <li class="servico-item">Gestão de marca contínua</li>
-              <li class="servico-item">Estudos de Mercado</li>
-            </ul>
-          </article>
-
-          <!-- 02 -->
-          <article class="servico-card" aria-labelledby="svc-branding">
-            <span class="servico-bg-num" aria-hidden="true">02</span>
-            <div class="servico-top">
-              <div class="servico-index">Serviço 02</div>
-            </div>
-            <h3 class="servico-name" id="svc-branding">Branding &amp; Identidade</h3>
-            <p class="servico-desc">Uma marca que reflecte o verdadeiro nível da sua empresa — com presença e credibilidade.</p>
-            <ul class="servico-items" aria-label="O que inclui">
-              <li class="servico-item">Logótipo e identidade visual</li>
-              <li class="servico-item">Manual da marca</li>
-              <li class="servico-item">Arquitectura de marca</li>
-              <li class="servico-item">Assinatura de email corporativo</li>
-            </ul>
-          </article>
-
-          <!-- 03 -->
-          <article class="servico-card" aria-labelledby="svc-martech">
-            <span class="servico-bg-num" aria-hidden="true">03</span>
-            <div class="servico-top">
-              <div class="servico-index">Serviço 03</div>
-            </div>
-            <h3 class="servico-name" id="svc-martech">Martech &amp; Digital</h3>
-            <p class="servico-desc">Infraestrutura digital que credibiliza e amplia o alcance da sua empresa no mercado actual.</p>
-            <ul class="servico-items" aria-label="O que inclui">
-              <li class="servico-item">Domínio e email profissional</li>
-              <li class="servico-item">Website institucional</li>
-              <li class="servico-item">Gestão de redes sociais</li>
-              <li class="servico-item">Vídeo institucional</li>
-            </ul>
-          </article>
-
-          <!-- 04/05 — dinâmico -->
-          <article class="servico-card is-dynamic" aria-live="polite">
-
-            <div class="svc-progress-bar" aria-hidden="true">
-              <div class="svc-progress-fill"></div>
-            </div>
-
-            <div class="svc-dots" aria-hidden="true">
-              <button class="svc-dot is-active" data-idx="0"></button>
-              <button class="svc-dot" data-idx="1"></button>
-            </div>
-
-            <div class="svc-panel is-visible" data-panel="0">
-              <span class="servico-bg-num" aria-hidden="true">04</span>
-              <div class="servico-top">
-                <div class="servico-index">Serviço 04</div>
+          <!-- 01 — Destaque (linha inteira) -->
+          <article class="servico-card is-featured" role="listitem" aria-labelledby="svc-marketing">
+            <div class="servico-card-inner">
+              <div class="servico-left">
+                <div class="servico-top">
+                  <span class="servico-index" aria-hidden="true">01</span>
+                  <span class="servico-tag">
+                    <span class="servico-tag-dot" aria-hidden="true"></span>
+                    Mais procurado
+                  </span>
+                </div>
+                <h3 class="servico-name" id="svc-marketing">Outsourcing<br>de Marketing</h3>
+                <p class="servico-desc">Visão estratégica e execução consistente — sem os custos de uma equipa interna a tempo inteiro.</p>
+                <a href="#agendamento" class="servico-cta" aria-label="Saber mais sobre Outsourcing de Marketing">
+                  Saber mais
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
               </div>
-              <h3 class="servico-name">Gestão de Eventos</h3>
-              <p class="servico-desc">Eventos executados com rigor — do conceito à produção — que elevam a imagem da sua marca.</p>
               <ul class="servico-items" aria-label="O que inclui">
-                <li class="servico-item">Planeamento e produção</li>
-                <li class="servico-item">Logística e fornecedores</li>
-                <li class="servico-item">Relatório pós-evento</li>
+                <li class="servico-item">
+                  <span class="servico-item-check" aria-hidden="true"></span>
+                  Plano estratégico e comunicação
+                </li>
+                <li class="servico-item">
+                  <span class="servico-item-check" aria-hidden="true"></span>
+                  Cultura corporativa
+                </li>
+                <li class="servico-item">
+                  <span class="servico-item-check" aria-hidden="true"></span>
+                  Responsabilidade social empresarial
+                </li>
+                <li class="servico-item">
+                  <span class="servico-item-check" aria-hidden="true"></span>
+                  Gestão de marca contínua
+                </li>
+                <li class="servico-item">
+                  <span class="servico-item-check" aria-hidden="true"></span>
+                  Estudos de Mercado
+                </li>
               </ul>
+              <span class="servico-bg-num" aria-hidden="true">01</span>
             </div>
-
-            <div class="svc-panel" data-panel="1">
-              <span class="servico-bg-num" aria-hidden="true">05</span>
-              <div class="servico-top">
-                <div class="servico-index">Serviço 05</div>
-              </div>
-              <h3 class="servico-name">Entrada no Mercado Angolano</h3>
-              <p class="servico-desc">Orientação especializada para empresas internacionais que querem entrar em Angola com confiança.</p>
-              <ul class="servico-items" aria-label="O que inclui">
-                <li class="servico-item">Representação de marcas</li>
-                <li class="servico-item">Identificação de parcerias locais</li>
-                <li class="servico-item">Serviços de tradução e adaptação</li>
-              </ul>
-            </div>
-
           </article>
 
-        </div>
+          <!-- Linha inferior — 4 cards iguais -->
+          <div class="servicos-row" role="presentation">
+
+            <!-- 02 -->
+            <article class="servico-card" role="listitem" aria-labelledby="svc-branding">
+              <span class="servico-index-sm" aria-hidden="true">02</span>
+              <h3 class="servico-name-sm" id="svc-branding">Branding &amp;<br>Identidade</h3>
+              <p class="servico-desc-sm">Uma marca que reflecte o verdadeiro nível da sua empresa — com presença e credibilidade.</p>
+              <ul class="servico-items-sm" aria-label="O que inclui">
+                <li>Logótipo e identidade visual</li>
+                <li>Manual da marca</li>
+                <li>Arquitectura de marca</li>
+                <li>Assinatura de email corporativo</li>
+              </ul>
+              <a href="#agendamento" class="servico-link" aria-label="Saber mais sobre Branding e Identidade">
+                Saber mais
+                <svg width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </a>
+            </article>
+
+            <!-- 03 -->
+            <article class="servico-card" role="listitem" aria-labelledby="svc-martech">
+              <span class="servico-index-sm" aria-hidden="true">03</span>
+              <h3 class="servico-name-sm" id="svc-martech">Martech &amp;<br>Digital</h3>
+              <p class="servico-desc-sm">Infraestrutura digital que credibiliza e amplia o alcance da sua empresa no mercado actual.</p>
+              <ul class="servico-items-sm" aria-label="O que inclui">
+                <li>Domínio e email profissional</li>
+                <li>Website institucional</li>
+                <li>Gestão de redes sociais</li>
+                <li>Vídeo institucional</li>
+              </ul>
+              <a href="#agendamento" class="servico-link" aria-label="Saber mais sobre Martech e Digital">
+                Saber mais
+                <svg width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </a>
+            </article>
+
+            <!-- 04 -->
+            <article class="servico-card" role="listitem" aria-labelledby="svc-eventos">
+              <span class="servico-index-sm" aria-hidden="true">04</span>
+              <h3 class="servico-name-sm" id="svc-eventos">Gestão de<br>Eventos</h3>
+              <p class="servico-desc-sm">Eventos executados com rigor — do conceito à produção — que elevam a imagem da sua marca.</p>
+              <ul class="servico-items-sm" aria-label="O que inclui">
+                <li>Planeamento e produção</li>
+                <li>Logística e fornecedores</li>
+                <li>Relatório pós-evento</li>
+              </ul>
+              <a href="#agendamento" class="servico-link" aria-label="Saber mais sobre Gestão de Eventos">
+                Saber mais
+                <svg width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </a>
+            </article>
+
+            <!-- 05 -->
+            <article class="servico-card" role="listitem" aria-labelledby="svc-angola">
+              <span class="servico-index-sm" aria-hidden="true">05</span>
+              <h3 class="servico-name-sm" id="svc-angola">Entrada no<br>Mercado Angolano</h3>
+              <p class="servico-desc-sm">Orientação especializada para empresas internacionais que querem entrar em Angola com confiança.</p>
+              <ul class="servico-items-sm" aria-label="O que inclui">
+                <li>Representação de marcas</li>
+                <li>Identificação de parcerias locais</li>
+                <li>Tradução e adaptação cultural</li>
+              </ul>
+              <a href="#agendamento" class="servico-link" aria-label="Saber mais sobre Entrada no Mercado Angolano">
+                Saber mais
+                <svg width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </a>
+            </article>
+
+          </div><!-- /servicos-row -->
+
+        </div><!-- /servicos-grid -->
+
       </div>
     </section>
