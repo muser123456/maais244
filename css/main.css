@@ -1363,10 +1363,14 @@
       align-items: center;
       gap: 0;
       animation: parceiros-scroll 48s linear infinite;
+      animation-play-state: paused;
       width: max-content;
       will-change: transform;
     }
-    .parceiros-track:hover {
+    .parceiros-track.parceiros-running {
+      animation-play-state: running;
+    }
+    .parceiros-track.parceiros-running:hover {
       animation-play-state: paused;
     }
     @keyframes parceiros-scroll {
