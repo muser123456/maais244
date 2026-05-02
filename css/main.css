@@ -2000,29 +2000,45 @@
     .portfolio-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      grid-template-rows: 200px 300px;
-      gap: var(--sp-4);
+      grid-template-rows: 260px 220px 260px;
+      gap: 6px;
     }
     .pf-item {
       position: relative;
       overflow: hidden;
-      border-radius: var(--r-4);
+      border-radius: 8px;
       background: rgba(255,255,255,.04);
       border: 1px solid rgba(255,255,255,.06);
       cursor: pointer;
     }
-    .pf-item-1 { grid-column: span 2; }
-    .pf-item-4 { grid-column: span 2; }
 
-    /* item 6 — frame ajustada ao logo mavu (fundo preto, formato horizontal) */
-    .pf-item-6 {
-      background: #000;
-    }
+    /* Linha 1: item1 largo + item2 */
+    .pf-item-1 { grid-column: span 2; }
+
+    /* Linha 2: item3 + item4 + item5 — três iguais */
+
+    /* Linha 3: item6 + item7 + item8 largo */
+    .pf-item-6 { background: #000; }
     .pf-item-6 .pf-img {
       object-fit: contain;
       width: 100%;
       height: 100%;
       padding: var(--sp-8);
+    }
+    .pf-item-8 { grid-column: span 2; }
+
+    /* item 7 — Coaching Angola (fundo branco, logo com espaço) */
+    .pf-item-7 { background: #fff; }
+    .pf-item-7 .pf-img {
+      object-fit: contain;
+      width: 100%;
+      height: 100%;
+      padding: var(--sp-12);
+    }
+
+    /* item 8 — Matabicho (fundo azul, cover total) */
+    .pf-item-8 .pf-img {
+      object-fit: cover;
     }
 
     .pf-img {
