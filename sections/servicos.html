@@ -24,7 +24,7 @@
         <!-- ── Tab selector ── -->
         <div class="svc-tabs reveal d3" role="tablist" aria-label="Serviços">
 
-          <button class="svc-tab svc-tab--active" role="tab" aria-selected="true"
+          <button class="svc-tab" role="tab" aria-selected="false"
                   aria-controls="svc-panel-0" id="svc-tab-0" data-idx="0">
             <span class="svc-tab-num" aria-hidden="true">01</span>
             <span class="svc-tab-icon" aria-hidden="true">
@@ -78,7 +78,7 @@
         <div class="svc-panels">
 
           <!-- Panel 01 — Outsourcing -->
-          <div class="svc-panel svc-panel--active" id="svc-panel-0"
+          <div class="svc-panel" id="svc-panel-0"
                role="tabpanel" aria-labelledby="svc-tab-0">
             <div class="svc-panel-inner">
               <div class="svc-panel-col svc-panel-col--main">
@@ -251,73 +251,5 @@
         </div><!-- /svc-panels -->
 
       </div><!-- /container -->
-
-      <script>
-      (function () {
-        'use strict';
-
-        var tabs   = Array.prototype.slice.call(document.querySelectorAll('.svc-tab'));
-        var panels = Array.prototype.slice.call(document.querySelectorAll('.svc-panel'));
-
-        if (!tabs.length || !panels.length) return;
-
-        function activate(idx) {
-          tabs.forEach(function (t, i) {
-            var isActive = (i === idx);
-            t.setAttribute('aria-selected', isActive ? 'true' : 'false');
-            t.classList.toggle('svc-tab--active', isActive);
-          });
-
-          panels.forEach(function (p, i) {
-            if (i === idx) {
-              p.classList.add('svc-panel--enter');
-              p.classList.add('svc-panel--active');
-              /* Trigger reflow so transition fires */
-              void p.offsetWidth;
-              p.classList.remove('svc-panel--enter');
-              /* Stagger list items */
-              var items = p.querySelectorAll('.svc-list li, .svc-pkg, .svc-format-card');
-              items.forEach(function (el, j) {
-                el.style.opacity = '0';
-                el.style.transform = 'translateY(10px)';
-                el.style.transition = 'none';
-                setTimeout(function () {
-                  el.style.transition = 'opacity 300ms ease, transform 300ms ease';
-                  el.style.opacity = '1';
-                  el.style.transform = 'none';
-                }, 60 + j * 55);
-              });
-              var stat = p.querySelector('.svc-stat-val');
-              if (stat) {
-                stat.style.opacity = '0';
-                stat.style.transform = 'translateY(12px)';
-                stat.style.transition = 'none';
-                setTimeout(function () {
-                  stat.style.transition = 'opacity 360ms ease, transform 360ms ease';
-                  stat.style.opacity = '1';
-                  stat.style.transform = 'none';
-                }, 80);
-              }
-            } else {
-              p.classList.remove('svc-panel--active');
-              p.classList.remove('svc-panel--enter');
-            }
-          });
-        }
-
-        tabs.forEach(function (tab, i) {
-          tab.addEventListener('click', function () { activate(i); });
-          /* Keyboard navigation */
-          tab.addEventListener('keydown', function (e) {
-            if (e.key === 'ArrowRight') { activate((i + 1) % tabs.length); tabs[(i + 1) % tabs.length].focus(); }
-            if (e.key === 'ArrowLeft')  { activate((i - 1 + tabs.length) % tabs.length); tabs[(i - 1 + tabs.length) % tabs.length].focus(); }
-          });
-        });
-
-        /* Initialise first tab */
-        activate(0);
-
-      })();
-      </script>
 
     </section>
