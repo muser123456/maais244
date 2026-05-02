@@ -272,6 +272,26 @@
       items.forEach(function (el) { io.observe(el); });
     })();
 
+    /* ── Parceiros — inicia scroll apenas quando visível ── */
+    (function () {
+      var track = document.querySelector('.parceiros-track');
+      if (!track) return;
+      if (!window.IntersectionObserver) {
+        track.classList.add('parceiros-running');
+        return;
+      }
+      var section = document.getElementById('parceiros');
+      var started = false;
+      var io = new IntersectionObserver(function (entries) {
+        if (entries[0].isIntersecting && !started) {
+          started = true;
+          track.classList.add('parceiros-running');
+          io.disconnect();
+        }
+      }, { threshold: 0.3 });
+      io.observe(section || track);
+    })();
+
     /* ── Parceiros: cor viva no centro, cinzento nas bordas ── */
     (function () {
       const wrap = document.querySelector('.parceiros-track-wrap');
