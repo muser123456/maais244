@@ -327,18 +327,18 @@
     });
 
     /* ================================================================
-       FORMULÁRIO DE AGENDAMENTO — Formspree
+       FORMULÁRIO DE AGENDAMENTO — Web3Forms
        ================================================================
-       CONFIGURAÇÃO (1 passo único):
-         1. Aceda a https://formspree.io
-         2. Registe-se com micael.luvumbu.mais244@gmail.com
-         3. Clique em "New Form", dê um nome (ex: "Agendamento +244")
-         4. Copie o endpoint gerado  →  https://formspree.io/f/XXXXXXXX
-         5. Substitua 'SEU_ENDPOINT_FORMSPREE' abaixo pelo endpoint copiado
-         Plano gratuito: 50 submissões/mês. Sem cartão de crédito.
+       CONFIGURAÇÃO (30 segundos, 1 passo):
+         1. Aceda a https://web3forms.com
+         2. Coloque o email: micael.luvumbu.mais244@gmail.com
+         3. Clique "Create Access Key"
+         4. Confirme o email que recebe → copie a Access Key
+         5. Substitua 'SUA_ACCESS_KEY_AQUI' abaixo pela chave
+         Gratuito: 250 submissoes/mes. Sem conta nem cartao.
     ================================================================ */
     (function () {
-      var FORMSPREE_ENDPOINT = 'https://formspree.io/f/SEU_ENDPOINT_AQUI';
+      var W3F_KEY = 'SUA_ACCESS_KEY_AQUI'; /* <-- substitua aqui */
 
       var form       = document.getElementById('agendamento-form');
       var submitBtn  = document.getElementById('form-submit-btn');
@@ -353,7 +353,6 @@
       form.addEventListener('submit', function (e) {
         e.preventDefault();
 
-        /* ── Validação ── */
         var nome    = form.querySelector('#form-nome').value.trim();
         var email   = form.querySelector('#form-email').value.trim();
         var servico = form.querySelector('#form-servico').value;
@@ -367,48 +366,48 @@
         }
         errorMsg.style.display = 'none';
 
-        /* ── Estado: a enviar ── */
         submitBtn.disabled       = true;
         btnText.style.display    = 'none';
         btnLoading.style.display = '';
 
-        /* ── Recolher todos os campos ── */
         var dataEnvio = new Date().toLocaleString('pt-AO', {
           day: '2-digit', month: '2-digit', year: 'numeric',
           hour: '2-digit', minute: '2-digit'
         });
 
         var payload = {
-          _replyto:        email,
-          _subject:        '\uD83D\uDDD3\uFE0F Novo pedido de consulta — ' + nome,
-          Nome:            nome,
-          Empresa:         form.querySelector('#form-empresa').value.trim()  || 'N/A',
-          Email:           email,
-          Telefone:        form.querySelector('#form-tel').value.trim()       || 'N/A',
-          'Área':          servico,
-          'Data preferida': form.querySelector('#form-data').value            || 'N/A',
-          Horário:         form.querySelector('#form-hora').value             || 'N/A',
-          Modalidade:      form.querySelector('#form-modalidade').value       || 'N/A',
-          Mensagem:        form.querySelector('#form-mensagem').value.trim()  || '(sem mensagem)',
-          'Enviado em':    dataEnvio
+          access_key:  W3F_KEY,
+          subject:     'Novo pedido de consulta +244 — ' + nome,
+          from_name:   '+244 Consultoria & Marketing',
+          replyto:     email,
+          Nome:        nome,
+          Empresa:     form.querySelector('#form-empresa').value.trim()  || 'N/A',
+          Email:       email,
+          Telefone:    form.querySelector('#form-tel').value.trim()       || 'N/A',
+          Servico:     servico,
+          Data:        form.querySelector('#form-data').value             || 'N/A',
+          Horario:     form.querySelector('#form-hora').value             || 'N/A',
+          Modalidade:  form.querySelector('#form-modalidade').value       || 'N/A',
+          Mensagem:    form.querySelector('#form-mensagem').value.trim()  || '(sem mensagem)',
+          Enviado_em:  dataEnvio
         };
 
-        /* ── Envio via Formspree ── */
-        fetch(FORMSPREE_ENDPOINT, {
+        fetch('https://api.web3forms.com/submit', {
           method:  'POST',
           headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
           body:    JSON.stringify(payload)
         })
-        .then(function (res) {
-          if (res.ok) {
+        .then(function (res) { return res.json(); })
+        .then(function (data) {
+          if (data.success) {
             form.style.display       = 'none';
             successBox.style.display = 'block';
           } else {
-            return res.json().then(function (data) { throw new Error(data.error || res.status); });
+            throw new Error(data.message || 'Erro desconhecido');
           }
         })
         .catch(function (err) {
-          console.error('+244 Mais: Erro Formspree', err);
+          console.error('+244: Erro Web3Forms', err);
           showSendError();
         });
       });
@@ -421,3 +420,4 @@
         sendErrBox.style.display = 'block';
       }
     })();
+
