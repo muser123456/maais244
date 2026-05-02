@@ -7,7 +7,6 @@
       if (!tabs.length || !panels.length) return;
 
       function staggerPanel(panel) {
-        /* Lista de items com stagger escalonado */
         var items = panel.querySelectorAll('.svc-list li');
         items.forEach(function (el, j) {
           el.style.opacity = '0';
@@ -19,7 +18,6 @@
             el.style.transform = 'none';
           }, 120 + j * 45);
         });
-        /* Pacotes e cards com fade-up */
         var cards = panel.querySelectorAll('.svc-pkg, .svc-format-card');
         cards.forEach(function (el, j) {
           el.style.opacity = '0';
@@ -31,7 +29,6 @@
             el.style.transform = 'none';
           }, 140 + j * 60);
         });
-        /* Stats */
         var stats = panel.querySelectorAll('.svc-stat-val');
         stats.forEach(function (el, j) {
           el.style.opacity = '0';
@@ -43,7 +40,6 @@
             el.style.transform = 'none';
           }, 100 + j * 80);
         });
-        /* Nota e CTA */
         var extras = panel.querySelectorAll('.svc-stat-note, .svc-cta');
         extras.forEach(function (el, j) {
           el.style.opacity = '0';
@@ -65,7 +61,7 @@
           if (i === idx) {
             p.style.display = 'block';
             p.style.animation = 'none';
-            void p.offsetWidth; /* force reflow */
+            void p.offsetWidth;
             p.style.animation = '';
             p.classList.add('svc-panel--active');
             staggerPanel(p);
@@ -87,7 +83,7 @@
       activate(0);
     })();
 
-    /* Eventos — animação de entrada escalonada */
+    /* Eventos */
     (function() {
       const cards = document.querySelectorAll('.evento-anim');
       if (!cards.length || !window.IntersectionObserver) {
@@ -102,7 +98,7 @@
       cards.forEach(c => io.observe(c));
     })();
 
-    /* Angola — slider de fundo */
+    /* Angola slider */
     (function() {
       const slides = document.querySelectorAll('.angola-slide');
       if (!slides.length) return;
@@ -114,12 +110,11 @@
       }, 5000);
     })();
 
-    /* Angola — counter animado */
+    /* Angola counter */
     (function() {
       const cards = document.querySelectorAll('.angola-stat-num');
       if (!cards.length) return;
       let animated = false;
-
       function animateCounters() {
         if (animated) return;
         animated = true;
@@ -135,7 +130,6 @@
           }, 16);
         });
       }
-
       const section = document.getElementById('angola');
       if (!section || !window.IntersectionObserver) { animateCounters(); return; }
       const io = new IntersectionObserver(entries => {
@@ -152,7 +146,6 @@
       const dots     = document.querySelectorAll('.hero-dot');
       if (!slides.length) return;
       let current = 0, timer;
-
       function goTo(i) {
         slides[current].classList.remove('active');
         contents[current].classList.remove('active');
@@ -162,12 +155,10 @@
         contents[current].classList.add('active');
         dots[current].classList.add('active');
       }
-
       function start() {
         clearInterval(timer);
         timer = setInterval(() => goTo(current + 1), INTERVAL);
       }
-
       dots.forEach((d, i) => d.addEventListener('click', () => { goTo(i); start(); }));
       start();
     })();
@@ -241,7 +232,7 @@
       let cur = 0, timer;
       const goTo = i => {
         cur = (i + total) % total;
-        inner.style.transform = `translateX(-${cur * 100}%)`;
+        inner.style.transform = 'translateX(-' + (cur * 100) + '%)';
         dots.forEach((d, idx) => { d.classList.toggle('active', idx === cur); d.setAttribute('aria-selected', String(idx === cur)); });
       };
       const startAuto = () => { clearInterval(timer); timer = setInterval(() => goTo(cur + 1), 5500); };
@@ -251,9 +242,7 @@
       goTo(0); startAuto();
     })();
 
-
-
-    /* ── Portfólio — animação de entrada por scroll ── */
+    /* Portfolio reveal */
     (function () {
       var items = document.querySelectorAll('.pf-item');
       if (!items.length) return;
@@ -263,23 +252,17 @@
       }
       var io = new IntersectionObserver(function (entries) {
         entries.forEach(function (e) {
-          if (e.isIntersecting) {
-            e.target.classList.add('pf-visible');
-            io.unobserve(e.target);
-          }
+          if (e.isIntersecting) { e.target.classList.add('pf-visible'); io.unobserve(e.target); }
         });
       }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
       items.forEach(function (el) { io.observe(el); });
     })();
 
-    /* ── Parceiros — inicia scroll apenas quando visível ── */
+    /* Parceiros scroll */
     (function () {
       var track = document.querySelector('.parceiros-track');
       if (!track) return;
-      if (!window.IntersectionObserver) {
-        track.classList.add('parceiros-running');
-        return;
-      }
+      if (!window.IntersectionObserver) { track.classList.add('parceiros-running'); return; }
       var section = document.getElementById('parceiros');
       var started = false;
       var io = new IntersectionObserver(function (entries) {
@@ -292,39 +275,29 @@
       io.observe(section || track);
     })();
 
-    /* ── Parceiros: cor viva no centro, cinzento nas bordas ── */
+    /* Parceiros cor */
     (function () {
       const wrap = document.querySelector('.parceiros-track-wrap');
       const imgs = document.querySelectorAll('.parceiro-img');
       if (!wrap || !imgs.length) return;
-
-      const wrapW   = wrap.getBoundingClientRect().width;
+      const wrapW  = wrap.getBoundingClientRect().width;
       const centerX = wrapW / 2;
-      // Zona "viva" = 30% do centro para cada lado
-      const liveZone  = wrapW * 0.28;
-      // Zona de fade = mais 22% para cada lado
-      const fadeZone  = wrapW * 0.22;
-
+      const liveZone = wrapW * 0.28;
+      const fadeZone = wrapW * 0.22;
       function tick() {
         imgs.forEach(img => {
           const rect = img.getBoundingClientRect();
           const wrapRect = wrap.getBoundingClientRect();
           const imgCX = rect.left - wrapRect.left + rect.width / 2;
           const dist  = Math.abs(imgCX - centerX);
-
-          let t; // 0 = cores vivas, 1 = cinzento total
-          if (dist <= liveZone) {
-            t = 0;
-          } else if (dist <= liveZone + fadeZone) {
-            t = (dist - liveZone) / fadeZone;
-          } else {
-            t = 1;
-          }
-
-          const grayscale = Math.round(t * 100);
+          let t;
+          if (dist <= liveZone) { t = 0; }
+          else if (dist <= liveZone + fadeZone) { t = (dist - liveZone) / fadeZone; }
+          else { t = 1; }
+          const grayscale  = Math.round(t * 100);
           const brightness = 1 - t * 0.3;
           const opacity    = 1 - t * 0.55;
-          img.style.filter  = `grayscale(${grayscale}%) brightness(${brightness})`;
+          img.style.filter  = 'grayscale(' + grayscale + '%) brightness(' + brightness + ')';
           img.style.opacity = opacity;
         });
         requestAnimationFrame(tick);
@@ -332,9 +305,7 @@
       tick();
     })();
 
-
-    
-    /* MVV — toggle por toque em mobile */
+    /* MVV toggle */
     (function() {
       document.querySelectorAll('.mvv-item').forEach(item => {
         item.addEventListener('click', () => {
@@ -355,15 +326,103 @@
       });
     });
 
-    /* Form feedback */
-    (function() {
-      const form = document.querySelector('form[aria-label="Formulário de agendamento"]');
+    /* ================================================================
+       FORMULÁRIO DE AGENDAMENTO — EmailJS
+       ================================================================
+       CONFIGURACAO:
+         1. Crie conta em https://www.emailjs.com (plano gratuito = 200 emails/mês)
+         2. Adicione um Email Service (Gmail) e copie o Service ID
+         3. Crie um Email Template com as variáveis abaixo e copie o Template ID
+         4. Vá a Account > API Keys e copie a Public Key
+         5. Substitua os três valores AQUI e no index.html (script emailjs)
+    ================================================================ */
+    (function () {
+      var EMAILJS_PUBLIC_KEY  = 'SEU_PUBLIC_KEY_AQUI';
+      var EMAILJS_SERVICE_ID  = 'SEU_SERVICE_ID_AQUI';
+      var EMAILJS_TEMPLATE_ID = 'SEU_TEMPLATE_ID_AQUI';
+
+      var form       = document.getElementById('agendamento-form');
+      var submitBtn  = document.getElementById('form-submit-btn');
+      var btnText    = document.getElementById('btn-text');
+      var btnLoading = document.getElementById('btn-loading');
+      var errorMsg   = document.getElementById('form-error-msg');
+      var successBox = document.getElementById('form-success');
+      var sendErrBox = document.getElementById('form-send-error');
+
       if (!form) return;
-      const submit = form.querySelector('.form-submit');
-      form.addEventListener('submit', e => {
+
+      if (typeof emailjs !== 'undefined') {
+        emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+      }
+
+      form.addEventListener('submit', function (e) {
         e.preventDefault();
-        if (submit) {
-          submit.disabled = true;
+
+        var nome    = form.querySelector('#form-nome').value.trim();
+        var email   = form.querySelector('#form-email').value.trim();
+        var servico = form.querySelector('#form-servico').value;
+
+        if (!nome || !email || !servico) {
+          errorMsg.style.display = 'block';
+          if (!nome)        form.querySelector('#form-nome').focus();
+          else if (!email)  form.querySelector('#form-email').focus();
+          else              form.querySelector('#form-servico').focus();
+          return;
         }
+        errorMsg.style.display = 'none';
+
+        submitBtn.disabled       = true;
+        btnText.style.display    = 'none';
+        btnLoading.style.display = '';
+
+        var empresa       = form.querySelector('#form-empresa').value.trim()   || 'N/A';
+        var telefone      = form.querySelector('#form-tel').value.trim()        || 'N/A';
+        var dataPreferida = form.querySelector('#form-data').value              || 'N/A';
+        var horario       = form.querySelector('#form-hora').value              || 'N/A';
+        var modalidade    = form.querySelector('#form-modalidade').value        || 'N/A';
+        var mensagem      = form.querySelector('#form-mensagem').value.trim()   || '(sem mensagem adicional)';
+        var dataEnvio     = new Date().toLocaleString('pt-AO', {
+          day: '2-digit', month: '2-digit', year: 'numeric',
+          hour: '2-digit', minute: '2-digit'
+        });
+
+        var templateParams = {
+          to_email:       'micael.luvumbu.mais244@gmail.com',
+          reply_to:       email,
+          from_name:      nome,
+          empresa:        empresa,
+          email_cliente:  email,
+          telefone:       telefone,
+          servico:        servico,
+          data_preferida: dataPreferida,
+          horario:        horario,
+          modalidade:     modalidade,
+          mensagem:       mensagem,
+          data_envio:     dataEnvio
+        };
+
+        if (typeof emailjs === 'undefined') {
+          console.error('+244 Mais: EmailJS SDK nao carregado. Verifique o script no index.html.');
+          showSendError();
+          return;
+        }
+
+        emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
+          .then(function () {
+            form.style.display      = 'none';
+            successBox.style.display = 'block';
+          })
+          .catch(function (err) {
+            console.error('+244 Mais: Erro ao enviar email via EmailJS', err);
+            showSendError();
+          });
       });
+
+      function showSendError() {
+        submitBtn.disabled       = false;
+        btnText.style.display    = '';
+        btnLoading.style.display = 'none';
+        form.style.display       = 'none';
+        sendErrBox.style.display = 'block';
+      }
     })();
