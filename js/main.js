@@ -252,6 +252,26 @@
     })();
 
 
+
+    /* ── Portfólio — animação de entrada por scroll ── */
+    (function () {
+      var items = document.querySelectorAll('.pf-item');
+      if (!items.length) return;
+      if (!window.IntersectionObserver) {
+        items.forEach(function (el) { el.classList.add('pf-visible'); });
+        return;
+      }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) {
+            e.target.classList.add('pf-visible');
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+      items.forEach(function (el) { io.observe(el); });
+    })();
+
     /* ── Parceiros: cor viva no centro, cinzento nas bordas ── */
     (function () {
       const wrap = document.querySelector('.parceiros-track-wrap');
