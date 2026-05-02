@@ -338,7 +338,7 @@
          Gratuito: 250 submissoes/mes. Sem conta nem cartao.
     ================================================================ */
     (function () {
-      var W3F_KEY = 'SUA_ACCESS_KEY_AQUI'; /* <-- substitua aqui */
+      var W3F_KEY = '3eee89be-c3ab-4871-901c-393a39d2a86a'; /* <-- substitua aqui */
 
       var form       = document.getElementById('agendamento-form');
       var submitBtn  = document.getElementById('form-submit-btn');
