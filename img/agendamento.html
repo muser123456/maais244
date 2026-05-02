@@ -1,0 +1,159 @@
+    <!-- ============================================================
+         AGENDAMENTO
+    ============================================================ -->
+    <section id="agendamento" aria-labelledby="agendamento-title">
+      <div class="container" style="padding-top: var(--section-v); padding-bottom: var(--section-v);">
+        <div class="agendamento-layout">
+
+          <div>
+            <span class="eyebrow reveal">Consulta Gratuita</span>
+            <h2 class="agendamento-title reveal d1" id="agendamento-title">
+              Vamos falar<br>sobre o seu projecto
+            </h2>
+            <p class="agendamento-body reveal d2">
+              Marque uma consulta estratégica sem compromisso. Em 30 minutos, identificamos as oportunidades e desafios da sua marca no mercado angolano.
+            </p>
+            <div class="agendamento-features reveal d3" role="list">
+              <div class="agendamento-feature" role="listitem">
+                <div class="agendamento-feature-icon" aria-hidden="true">
+                  <span class="check-icon"></span>
+                </div>
+                <span>Consulta inicial gratuita e sem compromisso</span>
+              </div>
+              <div class="agendamento-feature" role="listitem">
+                <div class="agendamento-feature-icon" aria-hidden="true">
+                  <span class="check-icon"></span>
+                </div>
+                <span>Diagnóstico rápido da sua situação actual</span>
+              </div>
+              <div class="agendamento-feature" role="listitem">
+                <div class="agendamento-feature-icon" aria-hidden="true">
+                  <span class="check-icon"></span>
+                </div>
+                <span>Proposta personalizada em 48 horas</span>
+              </div>
+              <div class="agendamento-feature" role="listitem">
+                <div class="agendamento-feature-icon" aria-hidden="true">
+                  <span class="check-icon"></span>
+                </div>
+                <span>Disponível presencialmente em Luanda ou por videochamada</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="contact-form reveal d2">
+            <p class="form-title">Agendar Consulta</p>
+
+            <!-- FORMULÁRIO PRINCIPAL -->
+            <form id="agendamento-form" aria-label="Formulário de agendamento" novalidate>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="form-nome">Nome *</label>
+                  <input class="form-input" type="text" id="form-nome" name="nome" placeholder="O seu nome" required autocomplete="name" />
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="form-empresa">Empresa</label>
+                  <input class="form-input" type="text" id="form-empresa" name="empresa" placeholder="Nome da empresa" autocomplete="organization" />
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="form-email">Email *</label>
+                  <input class="form-input" type="email" id="form-email" name="email" placeholder="email@empresa.com" required autocomplete="email" />
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="form-tel">Telefone</label>
+                  <input class="form-input" type="tel" id="form-tel" name="telefone" placeholder="+244 9XX XXX XXX" autocomplete="tel" />
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="form-data">Data preferida</label>
+                  <input class="form-input" type="date" id="form-data" name="data_preferida" />
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="form-hora">Horário preferido</label>
+                  <select class="form-select" id="form-hora" name="horario_preferido">
+                    <option value="">Seleccione um horário</option>
+                    <option value="08:00 - 10:00">08:00 – 10:00</option>
+                    <option value="10:00 - 12:00">10:00 – 12:00</option>
+                    <option value="12:00 - 14:00">12:00 – 14:00</option>
+                    <option value="14:00 - 16:00">14:00 – 16:00</option>
+                    <option value="16:00 - 18:00">16:00 – 18:00</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="form-modalidade">Modalidade</label>
+                <select class="form-select" id="form-modalidade" name="modalidade">
+                  <option value="">Seleccione uma modalidade</option>
+                  <option value="Presencial em Luanda">Presencial em Luanda</option>
+                  <option value="Videochamada (Google Meet)">Videochamada (Google Meet)</option>
+                  <option value="Videochamada (Zoom)">Videochamada (Zoom)</option>
+                  <option value="Chamada telefónica">Chamada telefónica</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="form-servico">Área de interesse *</label>
+                <select class="form-select" id="form-servico" name="servico" required>
+                  <option value="">Seleccione uma opção</option>
+                  <option value="Outsourcing de Marketing">Outsourcing de Marketing</option>
+                  <option value="Branding &amp; Identidade">Branding &amp; Identidade</option>
+                  <option value="Estudos de Mercado">Estudos de Mercado</option>
+                  <option value="Martech &amp; Digital">Martech &amp; Digital</option>
+                  <option value="Gestão de Eventos">Gestão de Eventos</option>
+                  <option value="Entrada no Mercado Angolano">Entrada no Mercado Angolano</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="form-mensagem">Mensagem (opcional)</label>
+                <textarea class="form-textarea" id="form-mensagem" name="mensagem" placeholder="Descreva brevemente o seu projecto ou desafio..."></textarea>
+              </div>
+
+              <!-- Estado de erro de validação -->
+              <div id="form-error-msg" style="display:none; color:#e53e3e; font-size:0.875rem; margin-bottom:0.75rem; padding:0.75rem; background:rgba(229,62,62,0.08); border-radius:8px; border-left:3px solid #e53e3e;">
+                Por favor, preencha os campos obrigatórios (Nome, Email e Área de interesse).
+              </div>
+
+              <button type="submit" class="form-submit" id="form-submit-btn">
+                <span id="btn-text">Enviar pedido de consulta</span>
+                <span id="btn-loading" style="display:none;">A enviar…</span>
+              </button>
+            </form>
+
+            <!-- Estado de SUCESSO (oculto por defeito) -->
+            <div id="form-success" style="display:none; text-align:center; padding:2.5rem 1.5rem;">
+              <div style="width:64px; height:64px; background:linear-gradient(135deg,#22c55e,#16a34a); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 1.25rem;">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <h3 style="font-size:1.25rem; font-weight:600; margin-bottom:0.5rem; color:var(--fg,#1a1a2e);">Pedido enviado com sucesso!</h3>
+              <p style="color:var(--fg-muted,#64748b); font-size:0.95rem; line-height:1.6;">
+                Recebemos o seu pedido de consulta. A nossa equipa entrará em contacto consigo em breve para confirmar a data e hora.
+              </p>
+              <button onclick="document.getElementById('form-success').style.display='none'; document.getElementById('agendamento-form').style.display='block'; document.getElementById('agendamento-form').reset();"
+                style="margin-top:1.5rem; padding:0.65rem 1.5rem; background:transparent; border:1.5px solid currentColor; border-radius:8px; cursor:pointer; font-size:0.875rem; opacity:0.7;">
+                Fazer novo pedido
+              </button>
+            </div>
+
+            <!-- Estado de ERRO de envio (oculto por defeito) -->
+            <div id="form-send-error" style="display:none; text-align:center; padding:2rem 1.5rem;">
+              <div style="width:64px; height:64px; background:rgba(229,62,62,0.12); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 1.25rem;">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#e53e3e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              </div>
+              <h3 style="font-size:1.125rem; font-weight:600; margin-bottom:0.5rem; color:var(--fg,#1a1a2e);">Ocorreu um erro no envio</h3>
+              <p style="color:var(--fg-muted,#64748b); font-size:0.9rem; line-height:1.6;">
+                Por favor, tente novamente ou contacte-nos directamente pelo email:<br>
+                <a href="mailto:micael.luvumbu.mais244@gmail.com" style="color:inherit; font-weight:600;">micael.luvumbu.mais244@gmail.com</a>
+              </p>
+              <button onclick="document.getElementById('form-send-error').style.display='none'; document.getElementById('agendamento-form').style.display='block'; document.getElementById('form-submit-btn').disabled=false; document.getElementById('btn-text').style.display=''; document.getElementById('btn-loading').style.display='none';"
+                style="margin-top:1.25rem; padding:0.65rem 1.5rem; background:transparent; border:1.5px solid currentColor; border-radius:8px; cursor:pointer; font-size:0.875rem; opacity:0.7;">
+                Tentar novamente
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </section>
