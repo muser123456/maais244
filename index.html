@@ -13,150 +13,126 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300;1,9..144,400&family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet" />
-
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 
   <style>
-    #splash * { margin: 0; padding: 0; box-sizing: border-box; }
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    body.splash-active { overflow:hidden; }
 
-    body.splash-active { overflow: hidden; }
+    #site-wrapper { opacity:0; visibility:hidden; }
+    #site-wrapper.ready { opacity:1; visibility:visible; transition:opacity 0.6s ease; }
 
-    #site-wrapper {
-      opacity: 0;
-      visibility: hidden;
-    }
-    #site-wrapper.ready {
-      opacity: 1;
-      visibility: visible;
-      transition: opacity 0.5s ease;
-    }
-
+    /* ─── SPLASH ─── */
     #splash {
-      position: fixed;
-      inset: 0;
-      background: radial-gradient(ellipse at 50% 40%, #0a1f5c 0%, #04103a 40%, #020810 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 99999;
-      overflow: hidden;
-      font-family: 'Arial', sans-serif;
+      position:fixed; inset:0;
+      background:#020810;
+      display:flex; align-items:center; justify-content:center;
+      z-index:99999; overflow:hidden;
+      font-family:'Geist','Arial',sans-serif;
+    }
+    #sp-canvas { position:absolute; inset:0; width:100%; height:100%; }
+
+    /* Vinheta radial */
+    #splash::before {
+      content:''; position:absolute; inset:0;
+      background:radial-gradient(ellipse 85% 85% at 50% 50%,
+        transparent 25%, rgba(2,8,16,0.45) 65%, rgba(2,8,16,0.92) 100%);
+      pointer-events:none; z-index:5;
     }
 
-    #bgCanvas {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
+    /* Anéis de pulso */
+    .sp-ring {
+      position:absolute; border-radius:50%;
+      top:50%; left:50%; transform:translate(-50%,-50%) scale(0);
+      pointer-events:none;
+      border:1px solid rgba(70,150,255,0.25);
+    }
+    .sp-ring-1 { width:160px; height:160px; }
+    .sp-ring-2 { width:300px; height:300px; }
+    .sp-ring-3 { width:480px; height:480px; }
+    .sp-ring-4 { width:700px; height:700px; border-color:rgba(70,150,255,0.12); }
+
+    /* Scanline */
+    #sp-scan {
+      position:absolute; height:1px; width:0; left:0; top:50%;
+      background:linear-gradient(90deg,transparent 0%,rgba(0,160,255,0.4) 20%,#80e0ff 50%,rgba(0,160,255,0.4) 80%,transparent 100%);
+      box-shadow:0 0 14px rgba(0,200,255,0.9),0 0 35px rgba(0,120,255,0.4);
+      z-index:8;
     }
 
-    .sp-particle {
-      position: absolute;
-      border-radius: 50%;
-      background: #4af;
-      pointer-events: none;
+    /* Logo central */
+    #sp-center {
+      position:relative; z-index:10;
+      display:flex; flex-direction:column; align-items:center;
     }
 
-    .sp-center-glow {
-      position: absolute;
-      width: 300px;
-      height: 300px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(0,120,255,0.15) 0%, transparent 70%);
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      pointer-events: none;
+    #sp-tag {
+      font-size:10px; letter-spacing:4px; color:rgba(120,180,255,0.65);
+      font-style:italic; opacity:0; margin-bottom:10px;
     }
 
-    #sp-logo-wrap {
-      position: relative;
-      z-index: 10;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+    #sp-row { display:flex; align-items:center; gap:20px; }
+
+    #sp-icon {
+      width:62px; height:75px; flex-shrink:0;
+      opacity:0;
+      filter:drop-shadow(0 0 14px rgba(80,180,255,0.95));
     }
 
-    #sp-logo-row {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      position: relative;
+    #sp-num-wrap { position:relative; overflow:hidden; }
+
+    #sp-number {
+      display:block;
+      font-size:clamp(72px,15vw,102px);
+      font-weight:900; letter-spacing:-3px; line-height:1;
+      color:transparent;
+      background:linear-gradient(165deg,#fff 0%,#a8d8ff 18%,#4aadff 42%,#1a7eff 68%,#003ecc 100%);
+      -webkit-background-clip:text; background-clip:text;
+      opacity:0;
+      filter:drop-shadow(0 0 26px rgba(30,130,255,0.95)) drop-shadow(0 0 55px rgba(30,110,255,0.45));
     }
 
-    #sp-circles-icon {
-      width: 80px;
-      height: 96px;
-      flex-shrink: 0;
-      opacity: 0;
+    /* Glitch ghost */
+    #sp-ghost {
+      position:absolute; inset:0; pointer-events:none;
+      font-size:clamp(72px,15vw,102px);
+      font-weight:900; letter-spacing:-3px; line-height:1;
+      color:transparent;
+      background:linear-gradient(165deg,rgba(255,40,80,0.2),rgba(0,220,255,0.2));
+      -webkit-background-clip:text; background-clip:text;
+      opacity:0;
     }
 
-    #sp-logo-text {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      position: relative;
-      overflow: hidden;
-    }
-
-    #sp-by-evision {
-      font-size: 11px;
-      color: #7bbfff;
-      letter-spacing: 1px;
-      opacity: 0;
-      align-self: flex-end;
-      margin-bottom: 2px;
-      font-style: italic;
-    }
-
-    #sp-main-title {
-      font-size: clamp(64px, 14vw, 90px);
-      font-weight: 900;
-      letter-spacing: -2px;
-      line-height: 1;
-      color: transparent;
-      background: linear-gradient(180deg, #ffffff 0%, #60b4ff 30%, #1a7eff 65%, #0050cc 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      position: relative;
-      opacity: 0;
-      filter: drop-shadow(0 0 20px rgba(30,120,255,0.8)) drop-shadow(0 0 40px rgba(30,100,255,0.4));
-    }
-
+    /* Flare sweep */
     #sp-flare {
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 60px;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), rgba(180,220,255,0.3), transparent);
-      pointer-events: none;
-      z-index: 5;
-      transform: skewX(-15deg);
+      position:absolute; inset:0;
+      background:linear-gradient(105deg,transparent 30%,rgba(255,255,255,0.55) 50%,rgba(200,240,255,0.18) 55%,transparent 70%);
+      transform:translateX(-120%); pointer-events:none; z-index:2;
     }
 
-    #sp-subtitle {
-      font-size: clamp(11px, 2.5vw, 14px);
-      color: #a0cfff;
-      letter-spacing: 3px;
-      font-weight: 400;
-      margin-top: 6px;
-      opacity: 0;
-      text-align: center;
-      text-shadow: 0 0 10px rgba(100,180,255,0.5);
+    #sp-sub {
+      font-size:clamp(10px,1.8vw,12px); letter-spacing:6px;
+      color:rgba(160,215,255,0.8);
+      text-transform:uppercase; opacity:0; margin-top:18px;
+      text-shadow:0 0 18px rgba(80,190,255,0.5);
     }
 
-    #sp-h-line {
-      position: absolute;
-      height: 1px;
-      width: 0;
-      background: linear-gradient(90deg, transparent, #4af, #fff, #4af, transparent);
-      top: 50%;
-      left: 0;
-      box-shadow: 0 0 8px #4af, 0 0 20px rgba(0,150,255,0.5);
-      pointer-events: none;
-      z-index: 8;
+    /* Progress */
+    #sp-prog-wrap {
+      position:absolute; bottom:38px; left:50%; transform:translateX(-50%);
+      width:180px; height:1px;
+      background:rgba(255,255,255,0.07); border-radius:2px; overflow:hidden; z-index:10;
+    }
+    #sp-prog {
+      height:100%; width:0%;
+      background:linear-gradient(90deg,#1a7eff,#60d8ff);
+      box-shadow:0 0 8px rgba(100,210,255,0.8); border-radius:2px;
+    }
+    #sp-pct {
+      position:absolute; bottom:50px; right:38px;
+      font-size:10px; letter-spacing:2px;
+      color:rgba(100,185,255,0.38); z-index:10;
+      font-variant-numeric:tabular-nums;
     }
   </style>
 
@@ -166,68 +142,68 @@
 
   <!-- SPLASH -->
   <div id="splash" role="presentation" aria-hidden="true">
-    <canvas id="bgCanvas"></canvas>
-    <div class="sp-center-glow"></div>
-    <div id="sp-h-line"></div>
+    <canvas id="sp-canvas"></canvas>
 
-    <div id="sp-logo-wrap">
-      <div id="sp-logo-row">
-        <svg id="sp-circles-icon" viewBox="0 0 80 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <div class="sp-ring sp-ring-1"></div>
+    <div class="sp-ring sp-ring-2"></div>
+    <div class="sp-ring sp-ring-3"></div>
+    <div class="sp-ring sp-ring-4"></div>
+
+    <div id="sp-scan"></div>
+
+    <div id="sp-center">
+      <div id="sp-tag">by E-Vision</div>
+      <div id="sp-row">
+
+        <!-- Ícone de círculos -->
+        <svg id="sp-icon" viewBox="0 0 80 96" fill="none" xmlns="http://www.w3.org/2000/svg">
           <defs>
-            <radialGradient id="cg" cx="50%" cy="50%" r="50%">
+            <radialGradient id="icg" cx="50%" cy="50%" r="50%">
               <stop offset="0%" stop-color="#60c0ff"/>
               <stop offset="100%" stop-color="#1060cc"/>
             </radialGradient>
-            <filter id="glow">
-              <feGaussianBlur stdDeviation="1.5" result="blur"/>
-              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            <filter id="iglow" x="-40%" y="-40%" width="180%" height="180%">
+              <feGaussianBlur stdDeviation="2.2" result="b"/>
+              <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
             </filter>
           </defs>
-          <g filter="url(#glow)">
-            <circle cx="38" cy="48" r="5"   fill="#80d0ff" opacity="0.9"/>
-            <circle cx="38" cy="30" r="4"   fill="url(#cg)" opacity="0.85"/>
-            <circle cx="52" cy="38" r="4"   fill="url(#cg)" opacity="0.85"/>
-            <circle cx="52" cy="58" r="4"   fill="url(#cg)" opacity="0.85"/>
-            <circle cx="38" cy="66" r="4"   fill="url(#cg)" opacity="0.85"/>
-            <circle cx="24" cy="58" r="4"   fill="url(#cg)" opacity="0.85"/>
-            <circle cx="24" cy="38" r="4"   fill="url(#cg)" opacity="0.85"/>
-            <circle cx="38" cy="16" r="3"   fill="#4aafff" opacity="0.7"/>
-            <circle cx="57" cy="22" r="3"   fill="#4aafff" opacity="0.7"/>
-            <circle cx="65" cy="40" r="3"   fill="#4aafff" opacity="0.7"/>
+          <g filter="url(#iglow)">
+            <circle cx="38" cy="48" r="6"   fill="#90e0ff" opacity="0.95"/>
+            <circle cx="38" cy="30" r="4.5" fill="url(#icg)" opacity="0.9"/>
+            <circle cx="52" cy="38" r="4.5" fill="url(#icg)" opacity="0.9"/>
+            <circle cx="52" cy="58" r="4.5" fill="url(#icg)" opacity="0.9"/>
+            <circle cx="38" cy="66" r="4.5" fill="url(#icg)" opacity="0.9"/>
+            <circle cx="24" cy="58" r="4.5" fill="url(#icg)" opacity="0.9"/>
+            <circle cx="24" cy="38" r="4.5" fill="url(#icg)" opacity="0.9"/>
+            <circle cx="38" cy="16" r="3"   fill="#4aafff" opacity="0.75"/>
+            <circle cx="57" cy="22" r="3"   fill="#4aafff" opacity="0.75"/>
+            <circle cx="65" cy="40" r="3"   fill="#4aafff" opacity="0.75"/>
             <circle cx="62" cy="62" r="2.5" fill="#4aafff" opacity="0.65"/>
             <circle cx="47" cy="76" r="2.5" fill="#4aafff" opacity="0.65"/>
             <circle cx="28" cy="78" r="2.5" fill="#4aafff" opacity="0.6"/>
             <circle cx="14" cy="65" r="2.5" fill="#4aafff" opacity="0.6"/>
             <circle cx="11" cy="45" r="2.5" fill="#4aafff" opacity="0.65"/>
-            <circle cx="18" cy="25" r="3"   fill="#4aafff" opacity="0.7"/>
-            <circle cx="38" cy="8"  r="2"   fill="#80cfff" opacity="0.5"/>
-            <circle cx="58" cy="12" r="1.5" fill="#80cfff" opacity="0.45"/>
-            <circle cx="70" cy="30" r="1.5" fill="#80cfff" opacity="0.45"/>
-            <circle cx="72" cy="52" r="1.5" fill="#80cfff" opacity="0.4"/>
-            <circle cx="54" cy="84" r="1.5" fill="#80cfff" opacity="0.4"/>
-            <circle cx="22" cy="86" r="1.5" fill="#80cfff" opacity="0.4"/>
-            <circle cx="8"  cy="70" r="1.5" fill="#80cfff" opacity="0.4"/>
-            <circle cx="6"  cy="38" r="1.5" fill="#80cfff" opacity="0.45"/>
-            <circle cx="18" cy="12" r="2"   fill="#80cfff" opacity="0.5"/>
-            <circle cx="38" cy="24" r="2"   fill="#c0e8ff" opacity="0.6"/>
-            <circle cx="49" cy="30" r="2"   fill="#c0e8ff" opacity="0.6"/>
-            <circle cx="27" cy="30" r="2"   fill="#c0e8ff" opacity="0.6"/>
+            <circle cx="18" cy="25" r="3"   fill="#4aafff" opacity="0.75"/>
           </g>
-          <circle cx="38" cy="48" r="3" fill="white" opacity="0.9"/>
-          <circle cx="38" cy="48" r="8" fill="#60b0ff" opacity="0.2"/>
+          <circle cx="38" cy="48" r="3.5" fill="white" opacity="0.95"/>
+          <circle cx="38" cy="48" r="10"  fill="#60b0ff" opacity="0.18"/>
         </svg>
 
-        <div id="sp-logo-text">
-          <span id="sp-by-evision">by: E-Vision</span>
-          <span id="sp-main-title">
+        <!-- +244 -->
+        <div id="sp-num-wrap">
+          <div id="sp-ghost">+244</div>
+          <div id="sp-number">
             +244
             <div id="sp-flare"></div>
-          </span>
+          </div>
         </div>
       </div>
 
-      <div id="sp-subtitle">CONSULTORIA &nbsp;|&nbsp; MARKETING &nbsp;|&nbsp; EVENTOS</div>
+      <div id="sp-sub">CONSULTORIA &nbsp;|&nbsp; MARKETING &nbsp;|&nbsp; EVENTOS</div>
     </div>
+
+    <div id="sp-prog-wrap"><div id="sp-prog"></div></div>
+    <div id="sp-pct">000%</div>
   </div>
 
 
@@ -245,122 +221,169 @@
   <script>
     'use strict';
 
-    /* ────────────────────────────────────────────
-       1. SPLASH — canvas + animações
-    ──────────────────────────────────────────── */
+    /* ══════════════════════════════════════════════
+       SPLASH — animação melhorada
+    ══════════════════════════════════════════════ */
     (function () {
       document.body.classList.add('splash-active');
 
-      var canvas = document.getElementById('bgCanvas');
+      var canvas = document.getElementById('sp-canvas');
       var ctx    = canvas.getContext('2d');
-      var W, H, animFrame, t = 0;
+      var W, H, raf, tick = 0;
+
+      /* Partículas flotantes */
+      var pts = [];
+      function buildPts() {
+        pts = [];
+        var n = Math.min(140, Math.floor(W * H / 7000));
+        for (var i = 0; i < n; i++) {
+          pts.push({
+            x: Math.random() * W, y: Math.random() * H,
+            r: Math.random() * 1.4 + 0.3,
+            vx:(Math.random()-.5)*.22, vy:(Math.random()-.5)*.22,
+            phase: Math.random()*Math.PI*2,
+            spd:   .007+Math.random()*.015
+          });
+        }
+      }
+
+      /* Grupos de linhas rotativas */
+      var lgs = [
+        {cx:0,cy:0,a:0,            da: .003, col:'rgba(55,130,255,', n:20, sp:2.1},
+        {cx:0,cy:0,a:Math.PI*.38,  da:-.002, col:'rgba(35,95,210,',  n:15, sp:1.8},
+        {cx:0,cy:0,a:Math.PI*.75,  da: .0017,col:'rgba(75,175,255,', n:11, sp:1.5}
+      ];
+      var lAlpha = 0;
 
       function resize() {
         W = canvas.width  = window.innerWidth;
         H = canvas.height = window.innerHeight;
-        updatePos();
+        lgs[0].cx=W*.76; lgs[0].cy=-H*.08;
+        lgs[1].cx=W*.10; lgs[1].cy= H*.58;
+        lgs[2].cx=W*.89; lgs[2].cy= H*.88;
+        buildPts();
       }
-
-      var groups = [
-        { cx:0, cy:0, angle:0,              speed: 0.004,  color:'rgba(80,160,255,', count:22, spread:2.2 },
-        { cx:0, cy:0, angle:Math.PI*0.3,    speed:-0.003,  color:'rgba(60,130,220,', count:18, spread:1.8 },
-        { cx:0, cy:0, angle:Math.PI*0.7,    speed: 0.0025, color:'rgba(40,100,200,', count:14, spread:1.6 }
-      ];
-
-      function updatePos() {
-        groups[0].cx = W*0.72; groups[0].cy = -H*0.1;
-        groups[1].cx = W*0.15; groups[1].cy =  H*0.5;
-        groups[2].cx = W*0.85; groups[2].cy =  H*0.85;
-      }
-
       resize();
       window.addEventListener('resize', resize);
 
-      var linesOpacity = 0;
+      function frame() {
+        tick++;
+        ctx.clearRect(0,0,W,H);
 
-      function draw() {
-        t++;
-        ctx.clearRect(0, 0, W, H);
-        groups.forEach(function(g) {
-          g.angle += g.speed;
-          for (var i = 0; i < g.count; i++) {
-            var a   = g.angle + (i / g.count) * Math.PI * g.spread;
-            var len = Math.max(W, H) * 1.6;
-            var alpha = linesOpacity * (0.08 + 0.04 * Math.sin(t * 0.001 + i));
+        /* Pontos de grid */
+        if (lAlpha > .08) {
+          var ga = lAlpha * .028;
+          ctx.fillStyle = 'rgba(80,170,255,'+ga+')';
+          for (var gx=44; gx<W; gx+=44)
+            for (var gy=44; gy<H; gy+=44) {
+              ctx.beginPath(); ctx.arc(gx,gy,.75,0,6.28); ctx.fill();
+            }
+        }
+
+        /* Linhas */
+        lgs.forEach(function(g) {
+          g.a += g.da;
+          for (var i=0; i<g.n; i++) {
+            var ang = g.a + (i/g.n)*Math.PI*g.sp;
+            var len = Math.max(W,H)*1.85;
+            var al  = lAlpha*(.055 + .03*Math.sin(tick*.0008+i*.6));
             ctx.beginPath();
-            ctx.moveTo(g.cx, g.cy);
-            ctx.lineTo(g.cx + Math.cos(a)*len, g.cy + Math.sin(a)*len);
-            ctx.strokeStyle = g.color + alpha + ')';
-            ctx.lineWidth   = 0.6;
+            ctx.moveTo(g.cx,g.cy);
+            ctx.lineTo(g.cx+Math.cos(ang)*len, g.cy+Math.sin(ang)*len);
+            ctx.strokeStyle = g.col+al+')';
+            ctx.lineWidth   = .5;
             ctx.stroke();
           }
         });
-        animFrame = requestAnimationFrame(draw);
+
+        /* Partículas */
+        pts.forEach(function(p) {
+          p.x+=p.vx; p.y+=p.vy;
+          if(p.x<0)p.x=W; if(p.x>W)p.x=0;
+          if(p.y<0)p.y=H; if(p.y>H)p.y=0;
+          p.phase+=p.spd;
+          var al = lAlpha*(.55+.35*Math.sin(p.phase))*.75;
+          ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,6.28);
+          ctx.fillStyle='rgba(120,205,255,'+al+')';
+          ctx.fill();
+        });
+
+        raf = requestAnimationFrame(frame);
       }
-      draw();
+      frame();
 
-      /* Partículas */
-      var splashEl = document.getElementById('splash');
-      for (var i = 0; i < 55; i++) {
-        (function(idx) {
-          var el   = document.createElement('div');
-          el.className = 'sp-particle';
-          var size = Math.random() * 2.5 + 0.8;
-          el.style.cssText = 'width:'+size+'px;height:'+size+'px;left:'+(Math.random()*100)+'%;top:'+(Math.random()*100)+'%;opacity:0;';
-          splashEl.appendChild(el);
-          gsap.to(el, {
-            opacity: Math.random() * 0.7 + 0.2,
-            duration: 0.6,
-            delay: 0.3 + idx * 0.03,
-            yoyo: true,
-            repeat: -1,
-            repeatDelay: Math.random() * 2
-          });
-        })(i);
+      /* Progresso */
+      var prog   = document.getElementById('sp-prog');
+      var pctEl  = document.getElementById('sp-pct');
+      function setP(v) {
+        prog.style.width = v+'%';
+        pctEl.textContent = String(Math.round(v)).padStart(3,'0')+'%';
       }
 
-      /* Estados iniciais GSAP */
-      gsap.set('#sp-circles-icon', { x: -20 });
-      gsap.set('#sp-subtitle',     { y: 10  });
+      /* ── GSAP timeline ── */
+      gsap.set(['#sp-tag','#sp-icon','#sp-number','#sp-sub'], {opacity:0});
+      gsap.set('#sp-icon',   {x:-28, scale:.82});
+      gsap.set('#sp-number', {y:22,  scale:.9});
+      gsap.set('#sp-sub',    {y:14,  letterSpacing:'9px'});
+      gsap.set('.sp-ring',   {scale:0, opacity:0});
+      gsap.set('#sp-ghost',  {opacity:0});
 
-      /* Timeline */
-      var tl = gsap.timeline({ delay: 0.1 });
+      var tl = gsap.timeline({delay:.05});
 
-      tl.to({}, {
-        duration: 0.8,
-        onUpdate: function() { linesOpacity = this.progress(); }
-      });
+      /* Linhas sobem */
+      tl.to({},{duration:.85, onUpdate:function(){lAlpha=this.progress()*.88;}});
 
-      tl.fromTo('#sp-h-line',
-        { width:0, left:0, opacity:1 },
-        { width:'100%', duration:0.5, ease:'power2.in' },
-        '-=0.2'
-      );
-      tl.to('#sp-h-line', { opacity:0, duration:0.2 });
+      /* Scanline */
+      tl.fromTo('#sp-scan',{width:'0%',opacity:1},{width:'100%',duration:.5,ease:'power3.in'},'-=.3');
+      tl.to('#sp-scan',{opacity:0,duration:.12});
 
-      tl.to('#sp-circles-icon', { opacity:1, x:0, duration:0.5, ease:'back.out(1.4)' }, '-=0.1');
-      tl.to('#sp-by-evision',   { opacity:1, y:0, duration:0.3, ease:'power2.out'    }, '-=0.2');
-      tl.to('#sp-main-title',   { opacity:1,      duration:0.4, ease:'power2.out'    }, '-=0.15');
+      /* Anéis em cascata */
+      tl.to('.sp-ring-1',{scale:1,opacity:.8,duration:.38,ease:'power2.out'},'-=.05');
+      tl.to('.sp-ring-2',{scale:1,opacity:.5,duration:.48,ease:'power2.out'},'-=.3');
+      tl.to('.sp-ring-3',{scale:1,opacity:.3,duration:.58,ease:'power2.out'},'-=.38');
+      tl.to('.sp-ring-4',{scale:1,opacity:.14,duration:.65,ease:'power2.out'},'-=.45');
 
-      tl.fromTo('#sp-flare',
-        { left:'-20%' },
-        { left:'110%', duration:0.6, ease:'power2.inOut' },
-        '-=0.1'
-      );
+      /* Pulso infinito nos anéis */
+      tl.to('.sp-ring',{
+        opacity:function(i){return [.15,.1,.06,.03][i]||.03;},
+        scale:1.06, duration:1.4, ease:'sine.inOut',
+        stagger:.1, repeat:-1, yoyo:true
+      },'-=.6');
 
-      tl.to('#sp-subtitle', { opacity:1, y:0, duration:0.5, ease:'power2.out' }, '-=0.2');
+      /* Ícone */
+      tl.to('#sp-icon',{opacity:1,x:0,scale:1,duration:.52,ease:'back.out(1.7)'},'-=1.2');
 
-      /* Mínimo 2.2s visível; depois espera confirmação de site carregado */
-      tl.to({}, { duration: 2.2 });
+      /* Tag */
+      tl.to('#sp-tag',{opacity:1,duration:.28,ease:'power2.out'},'-=.28');
 
-      tl.to('#splash', {
-        opacity: 0,
-        duration: 0.7,
-        ease: 'power2.inOut',
-        onComplete: function() {
-          splashEl.style.display = 'none';
+      /* +244 */
+      tl.to('#sp-number',{opacity:1,y:0,scale:1,duration:.58,ease:'back.out(1.45)'},'-=.18');
+
+      /* Flare sweep */
+      tl.fromTo('#sp-flare',{x:'-115%'},{x:'130%',duration:.68,ease:'power2.inOut'},'-=.08');
+
+      /* Glitch duplo */
+      tl.fromTo('#sp-ghost',{opacity:.45,x:-4,y:2},{opacity:0,x:4,y:0,duration:.1,ease:'none'},'-=.5');
+      tl.fromTo('#sp-ghost',{opacity:.28,x:3,y:-1},{opacity:0,x:0,y:0,duration:.08,ease:'none'});
+      tl.fromTo('#sp-ghost',{opacity:.18,x:-2},{opacity:0,x:0,duration:.06,ease:'none'},'.08');
+
+      /* Subtítulo */
+      tl.to('#sp-sub',{opacity:1,y:0,letterSpacing:'5px',duration:.55,ease:'power3.out'},'-=.4');
+
+      /* Barra de progresso */
+      tl.to({v:0},{v:100,duration:1.9,ease:'power1.inOut',
+        onUpdate:function(){setP(this.targets()[0].v);}
+      },'-=.55');
+
+      /* Pausa */
+      tl.to({},{duration:.35});
+
+      /* Fade out */
+      tl.to('#splash',{opacity:0,duration:.62,ease:'power2.inOut',
+        onComplete:function(){
+          document.getElementById('splash').style.display='none';
           document.body.classList.remove('splash-active');
-          cancelAnimationFrame(animFrame);
+          cancelAnimationFrame(raf);
           document.getElementById('site-wrapper').classList.add('ready');
         }
       });
@@ -369,9 +392,9 @@
     })();
 
 
-    /* ────────────────────────────────────────────
-       2. LOADER DE SECÇÕES
-    ──────────────────────────────────────────── */
+    /* ══════════════════════════════════════════════
+       LOADER DE SECÇÕES
+    ══════════════════════════════════════════════ */
     var headerSections = ['header'];
     var mainSections   = [
       'hero','sobre','servicos','angola','parceiros',
@@ -379,49 +402,28 @@
     ];
     var footerSections = ['footer'];
 
-    function loadSection(name) {
-      return fetch('sections/' + name + '.html').then(function(r) {
-        if (!r.ok) throw new Error('Erro ao carregar: ' + name);
+    function loadSection(n) {
+      return fetch('sections/'+n+'.html').then(function(r){
+        if(!r.ok) throw new Error('Erro: '+n);
         return r.text();
       });
     }
-
     function loadAll() {
-      var headerEl = document.getElementById('site-header');
-      var mainEl   = document.getElementById('site-main');
-      var footerEl = document.getElementById('site-footer');
-
-      var pHeader = Promise.all(headerSections.map(loadSection)).then(function(parts) {
-        headerEl.innerHTML = parts.join('');
-      });
-      var pMain = Promise.all(mainSections.map(loadSection)).then(function(parts) {
-        mainEl.innerHTML = parts.join('');
-      });
-      var pFooter = Promise.all(footerSections.map(loadSection)).then(function(parts) {
-        footerEl.innerHTML = parts.join('');
-      });
-
-      return Promise.all([pHeader, pMain, pFooter]);
+      return Promise.all([
+        Promise.all(headerSections.map(loadSection)).then(function(p){document.getElementById('site-header').innerHTML=p.join('');}),
+        Promise.all(mainSections.map(loadSection)).then(function(p){document.getElementById('site-main').innerHTML=p.join('');}),
+        Promise.all(footerSections.map(loadSection)).then(function(p){document.getElementById('site-footer').innerHTML=p.join('');})
+      ]);
     }
-
-    function initScripts() {
-      var script = document.createElement('script');
-      script.src = 'js/main.js';
-      document.body.appendChild(script);
+    function initScripts(){
+      var s=document.createElement('script');
+      s.src='js/main.js';
+      document.body.appendChild(s);
     }
-
-    loadAll()
-      .then(function() {
-        initScripts();
-        /* Se o splash já terminou a sua duração mínima, deixa-o fechar normalmente.
-           Se o site carregou antes do splash terminar, não faz nada — o splash
-           fecha sozinho no seu tempo. */
-      })
-      .catch(function(err) {
-        console.error('Erro ao carregar o site:', err);
-        /* Em caso de erro, avança o splash para não bloquear o utilizador */
-        if (window._splashTL) window._splashTL.progress(1);
-      });
+    loadAll().then(initScripts).catch(function(e){
+      console.error('Erro ao carregar o site:',e);
+      if(window._splashTL) window._splashTL.progress(1);
+    });
   </script>
 
 </body>
