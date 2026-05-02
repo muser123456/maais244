@@ -876,12 +876,34 @@
     }
     .svc-panel--active {
       display: block;
-      animation: svcFadeUp 340ms cubic-bezier(.25,.46,.45,.94) both;
+      animation: svcFadeUp 480ms cubic-bezier(.22,.68,0,1.1) both;
     }
 
     @keyframes svcFadeUp {
-      from { opacity: 0; transform: translateY(14px); }
+      from { opacity: 0; transform: translateY(18px); }
       to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Stat block ── */
+    .svc-stat-row {
+      display: flex;
+      gap: var(--sp-20);
+      margin-bottom: var(--sp-12);
+    }
+    .svc-stat-item {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      flex: 1;
+    }
+    .svc-stat-note {
+      font-size: 0.75rem;
+      font-weight: 300;
+      color: rgba(255,255,255,.38);
+      line-height: 1.65;
+      margin: 0;
+      border-top: 1px solid rgba(255,255,255,.07);
+      padding-top: var(--sp-10);
     }
 
     .svc-panel-inner {
