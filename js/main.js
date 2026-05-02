@@ -327,19 +327,18 @@
     });
 
     /* ================================================================
-       FORMULÁRIO DE AGENDAMENTO — EmailJS
+       FORMULÁRIO DE AGENDAMENTO — Formspree
        ================================================================
-       CONFIGURACAO:
-         1. Crie conta em https://www.emailjs.com (plano gratuito = 200 emails/mês)
-         2. Adicione um Email Service (Gmail) e copie o Service ID
-         3. Crie um Email Template com as variáveis abaixo e copie o Template ID
-         4. Vá a Account > API Keys e copie a Public Key
-         5. Substitua os três valores AQUI e no index.html (script emailjs)
+       CONFIGURAÇÃO (1 passo único):
+         1. Aceda a https://formspree.io
+         2. Registe-se com micael.luvumbu.mais244@gmail.com
+         3. Clique em "New Form", dê um nome (ex: "Agendamento +244")
+         4. Copie o endpoint gerado  →  https://formspree.io/f/XXXXXXXX
+         5. Substitua 'SEU_ENDPOINT_FORMSPREE' abaixo pelo endpoint copiado
+         Plano gratuito: 50 submissões/mês. Sem cartão de crédito.
     ================================================================ */
     (function () {
-      var EMAILJS_PUBLIC_KEY  = 'SEU_PUBLIC_KEY_AQUI';
-      var EMAILJS_SERVICE_ID  = 'SEU_SERVICE_ID_AQUI';
-      var EMAILJS_TEMPLATE_ID = 'SEU_TEMPLATE_ID_AQUI';
+      var FORMSPREE_ENDPOINT = 'https://formspree.io/f/SEU_ENDPOINT_AQUI';
 
       var form       = document.getElementById('agendamento-form');
       var submitBtn  = document.getElementById('form-submit-btn');
@@ -351,71 +350,67 @@
 
       if (!form) return;
 
-      if (typeof emailjs !== 'undefined') {
-        emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
-      }
-
       form.addEventListener('submit', function (e) {
         e.preventDefault();
 
+        /* ── Validação ── */
         var nome    = form.querySelector('#form-nome').value.trim();
         var email   = form.querySelector('#form-email').value.trim();
         var servico = form.querySelector('#form-servico').value;
 
         if (!nome || !email || !servico) {
           errorMsg.style.display = 'block';
-          if (!nome)        form.querySelector('#form-nome').focus();
-          else if (!email)  form.querySelector('#form-email').focus();
-          else              form.querySelector('#form-servico').focus();
+          if (!nome)       form.querySelector('#form-nome').focus();
+          else if (!email) form.querySelector('#form-email').focus();
+          else             form.querySelector('#form-servico').focus();
           return;
         }
         errorMsg.style.display = 'none';
 
+        /* ── Estado: a enviar ── */
         submitBtn.disabled       = true;
         btnText.style.display    = 'none';
         btnLoading.style.display = '';
 
-        var empresa       = form.querySelector('#form-empresa').value.trim()   || 'N/A';
-        var telefone      = form.querySelector('#form-tel').value.trim()        || 'N/A';
-        var dataPreferida = form.querySelector('#form-data').value              || 'N/A';
-        var horario       = form.querySelector('#form-hora').value              || 'N/A';
-        var modalidade    = form.querySelector('#form-modalidade').value        || 'N/A';
-        var mensagem      = form.querySelector('#form-mensagem').value.trim()   || '(sem mensagem adicional)';
-        var dataEnvio     = new Date().toLocaleString('pt-AO', {
+        /* ── Recolher todos os campos ── */
+        var dataEnvio = new Date().toLocaleString('pt-AO', {
           day: '2-digit', month: '2-digit', year: 'numeric',
           hour: '2-digit', minute: '2-digit'
         });
 
-        var templateParams = {
-          to_email:       'micael.luvumbu.mais244@gmail.com',
-          reply_to:       email,
-          from_name:      nome,
-          empresa:        empresa,
-          email_cliente:  email,
-          telefone:       telefone,
-          servico:        servico,
-          data_preferida: dataPreferida,
-          horario:        horario,
-          modalidade:     modalidade,
-          mensagem:       mensagem,
-          data_envio:     dataEnvio
+        var payload = {
+          _replyto:        email,
+          _subject:        '\uD83D\uDDD3\uFE0F Novo pedido de consulta — ' + nome,
+          Nome:            nome,
+          Empresa:         form.querySelector('#form-empresa').value.trim()  || 'N/A',
+          Email:           email,
+          Telefone:        form.querySelector('#form-tel').value.trim()       || 'N/A',
+          'Área':          servico,
+          'Data preferida': form.querySelector('#form-data').value            || 'N/A',
+          Horário:         form.querySelector('#form-hora').value             || 'N/A',
+          Modalidade:      form.querySelector('#form-modalidade').value       || 'N/A',
+          Mensagem:        form.querySelector('#form-mensagem').value.trim()  || '(sem mensagem)',
+          'Enviado em':    dataEnvio
         };
 
-        if (typeof emailjs === 'undefined') {
-          console.error('+244 Mais: EmailJS SDK nao carregado. Verifique o script no index.html.');
-          showSendError();
-          return;
-        }
-
-        emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
-          .then(function () {
-            form.style.display      = 'none';
+        /* ── Envio via Formspree ── */
+        fetch(FORMSPREE_ENDPOINT, {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body:    JSON.stringify(payload)
+        })
+        .then(function (res) {
+          if (res.ok) {
+            form.style.display       = 'none';
             successBox.style.display = 'block';
-          })
-          .catch(function (err) {
-            console.error('+244 Mais: Erro ao enviar email via EmailJS', err);
-            showSendError();
-          });
+          } else {
+            return res.json().then(function (data) { throw new Error(data.error || res.status); });
+          }
+        })
+        .catch(function (err) {
+          console.error('+244 Mais: Erro Formspree', err);
+          showSendError();
+        });
       });
 
       function showSendError() {
