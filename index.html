@@ -19,7 +19,7 @@
   <style>
     #splash * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    body { overflow: hidden; }
+    body.splash-active { overflow: hidden; }
 
     #site-wrapper {
       opacity: 0;
@@ -249,6 +249,8 @@
        1. SPLASH — canvas + animações
     ──────────────────────────────────────────── */
     (function () {
+      document.body.classList.add('splash-active');
+
       var canvas = document.getElementById('bgCanvas');
       var ctx    = canvas.getContext('2d');
       var W, H, animFrame, t = 0;
@@ -357,7 +359,7 @@
         ease: 'power2.inOut',
         onComplete: function() {
           splashEl.style.display = 'none';
-          document.body.style.overflow = '';
+          document.body.classList.remove('splash-active');
           cancelAnimationFrame(animFrame);
           document.getElementById('site-wrapper').classList.add('ready');
         }
