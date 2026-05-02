@@ -140,7 +140,7 @@
       if (!section || !window.IntersectionObserver) { animateCounters(); return; }
       const io = new IntersectionObserver(entries => {
         if (entries[0].isIntersecting) { animateCounters(); io.disconnect(); }
-      }, { threshold: 0.3 });
+      }, { threshold: 0.15 });
       io.observe(section);
     })();
 
