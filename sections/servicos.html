@@ -1,5 +1,5 @@
     <!-- ============================================================
-         SERVIÇOS — Enterprise accordion, v3
+         SERVIÇOS — Tab-panel full-width, v4
     ============================================================ -->
     <section id="servicos" aria-labelledby="servicos-title">
 
@@ -21,31 +21,70 @@
           </p>
         </header>
 
-        <!-- ── Grid de serviços ── -->
-        <div class="svc-grid reveal d3" role="list">
+        <!-- ── Tab selector ── -->
+        <div class="svc-tabs reveal d3" role="tablist" aria-label="Serviços">
 
-          <!-- ══ 01 ── Outsourcing de Marketing ══ -->
-          <article class="svc-card" role="listitem" data-svc="0">
-            <button class="svc-card-btn active" aria-expanded="true" aria-controls="svc-panel-0">
-              <div class="svc-card-top">
-                <span class="svc-card-num" aria-hidden="true">01</span>
-                <span class="svc-card-icon" aria-hidden="true">
-                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                    <path d="M3 10h14M10 3l7 7-7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </span>
-              </div>
-              <h3 class="svc-card-title">Outsourcing<br>de Marketing</h3>
-              <p class="svc-card-tagline">O seu departamento de marketing, sem os custos fixos.</p>
-              <div class="svc-card-arrow" aria-hidden="true">
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </div>
-            </button>
-            <div class="svc-card-panel" id="svc-panel-0" role="region" aria-label="Outsourcing de Marketing">
-              <div class="svc-panel-content">
-                <div class="svc-panel-block">
-                  <span class="svc-panel-label">Serviços incluídos</span>
-                  <ul class="svc-panel-list">
+          <button class="svc-tab svc-tab--active" role="tab" aria-selected="true"
+                  aria-controls="svc-panel-0" id="svc-tab-0" data-idx="0">
+            <span class="svc-tab-num" aria-hidden="true">01</span>
+            <span class="svc-tab-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                <path d="M2 9h14M9 2l7 7-7 7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <span class="svc-tab-name">Outsourcing<br>de Marketing</span>
+          </button>
+
+          <button class="svc-tab" role="tab" aria-selected="false"
+                  aria-controls="svc-panel-1" id="svc-tab-1" data-idx="1">
+            <span class="svc-tab-num" aria-hidden="true">02</span>
+            <span class="svc-tab-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                <rect x="2" y="4" width="14" height="11" rx="1.5" stroke="currentColor" stroke-width="1.4"/>
+                <path d="M6 2v4M12 2v4M2 8h14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+              </svg>
+            </span>
+            <span class="svc-tab-name">Gestão<br>de Eventos</span>
+          </button>
+
+          <button class="svc-tab" role="tab" aria-selected="false"
+                  aria-controls="svc-panel-2" id="svc-tab-2" data-idx="2">
+            <span class="svc-tab-num" aria-hidden="true">03</span>
+            <span class="svc-tab-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                <path d="M9 2L1 6l8 4 8-4-8-4z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+                <path d="M1 6v6M17 6v6M5 8.5v3.5a4 4 0 008 0V8.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+              </svg>
+            </span>
+            <span class="svc-tab-name">Formação<br>Executiva</span>
+          </button>
+
+          <button class="svc-tab" role="tab" aria-selected="false"
+                  aria-controls="svc-panel-3" id="svc-tab-3" data-idx="3">
+            <span class="svc-tab-num" aria-hidden="true">04</span>
+            <span class="svc-tab-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                <rect x="2" y="3" width="14" height="9" rx="1.5" stroke="currentColor" stroke-width="1.4"/>
+                <path d="M6 15h6M9 12v3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+                <path d="M6 8l2 2 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <span class="svc-tab-name">Soluções<br>Digitais</span>
+          </button>
+
+        </div><!-- /svc-tabs -->
+
+        <!-- ── Panels ── -->
+        <div class="svc-panels">
+
+          <!-- Panel 01 — Outsourcing -->
+          <div class="svc-panel svc-panel--active" id="svc-panel-0"
+               role="tabpanel" aria-labelledby="svc-tab-0">
+            <div class="svc-panel-inner">
+              <div class="svc-panel-col svc-panel-col--main">
+                <div class="svc-panel-group">
+                  <span class="svc-group-label">Serviços incluídos</span>
+                  <ul class="svc-list">
                     <li>Direção de Marketing (part-time ou full outsourcing)</li>
                     <li>Planeamento estratégico</li>
                     <li>Gestão de campanhas</li>
@@ -54,100 +93,89 @@
                     <li>Geração de leads e vendas</li>
                   </ul>
                 </div>
-                <div class="svc-panel-block">
-                  <span class="svc-panel-label">Pacotes disponíveis</span>
+              </div>
+              <div class="svc-panel-col svc-panel-col--side">
+                <div class="svc-panel-group">
+                  <span class="svc-group-label">Pacotes disponíveis</span>
                   <div class="svc-packages">
                     <div class="svc-pkg">
-                      <span class="svc-pkg-name">Starter</span>
-                      <span class="svc-pkg-desc">Pequenas empresas</span>
+                      <div class="svc-pkg-left">
+                        <span class="svc-pkg-name">Starter</span>
+                        <span class="svc-pkg-desc">Pequenas empresas</span>
+                      </div>
                     </div>
                     <div class="svc-pkg">
-                      <span class="svc-pkg-name">Growth</span>
-                      <span class="svc-pkg-desc">Empresas em expansão</span>
+                      <div class="svc-pkg-left">
+                        <span class="svc-pkg-name">Growth</span>
+                        <span class="svc-pkg-desc">Empresas em expansão</span>
+                      </div>
                     </div>
-                    <div class="svc-pkg svc-pkg--highlight">
-                      <span class="svc-pkg-name">Corporate</span>
-                      <span class="svc-pkg-desc">Médias empresas / instituições</span>
+                    <div class="svc-pkg svc-pkg--featured">
+                      <div class="svc-pkg-left">
+                        <span class="svc-pkg-name">Corporate</span>
+                        <span class="svc-pkg-desc">Médias empresas / instituições</span>
+                      </div>
+                      <span class="svc-pkg-badge">Popular</span>
                     </div>
                   </div>
                 </div>
-                <a href="#agendamento" class="svc-panel-cta">
+                <a href="#agendamento" class="svc-cta">
                   Iniciar projecto
-                  <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M2 6.5h9M6.5 2l4.5 4.5-4.5 4.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+                    <path d="M2 6.5h9M7 2l4.5 4.5L7 11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
                 </a>
               </div>
             </div>
-          </article>
+          </div>
 
-          <!-- ══ 02 ── Gestão de Eventos ══ -->
-          <article class="svc-card" role="listitem" data-svc="1">
-            <button class="svc-card-btn" aria-expanded="false" aria-controls="svc-panel-1">
-              <div class="svc-card-top">
-                <span class="svc-card-num" aria-hidden="true">02</span>
-                <span class="svc-card-icon" aria-hidden="true">
-                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                    <rect x="3" y="5" width="14" height="12" rx="2" stroke="currentColor" stroke-width="1.5"/>
-                    <path d="M7 3v4M13 3v4M3 9h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                  </svg>
-                </span>
-              </div>
-              <h3 class="svc-card-title">Gestão<br>de Eventos</h3>
-              <p class="svc-card-tagline">Do conceito à experiência — com rigor e impacto.</p>
-              <div class="svc-card-arrow" aria-hidden="true">
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </div>
-            </button>
-            <div class="svc-card-panel" id="svc-panel-1" role="region" aria-label="Gestão de Eventos" hidden>
-              <div class="svc-panel-content">
-                <div class="svc-panel-block">
-                  <span class="svc-panel-label">Tipos de evento</span>
-                  <ul class="svc-panel-list">
+          <!-- Panel 02 — Eventos -->
+          <div class="svc-panel" id="svc-panel-1"
+               role="tabpanel" aria-labelledby="svc-tab-1">
+            <div class="svc-panel-inner">
+              <div class="svc-panel-col svc-panel-col--main">
+                <div class="svc-panel-group">
+                  <span class="svc-group-label">Tipos de evento</span>
+                  <ul class="svc-list">
                     <li>Eventos corporativos</li>
                     <li>Feiras e exposições</li>
                     <li>Lançamentos de produtos</li>
                     <li>Conferências e fóruns</li>
                   </ul>
                 </div>
-                <div class="svc-panel-block">
-                  <span class="svc-panel-label">O que entregamos</span>
-                  <ul class="svc-panel-list">
+                <div class="svc-panel-group">
+                  <span class="svc-group-label">O que entregamos</span>
+                  <ul class="svc-list">
                     <li>Conceito criativo</li>
                     <li>Produção e logística</li>
                     <li>Comunicação e cobertura mediática</li>
-                    <li>Experiências interativas (IA, digital, imersivo)</li>
+                    <li>Experiências interativas — IA, digital e imersivo</li>
                   </ul>
                 </div>
-                <a href="#agendamento" class="svc-panel-cta">
-                  Iniciar projecto
-                  <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M2 6.5h9M6.5 2l4.5 4.5-4.5 4.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <div class="svc-panel-col svc-panel-col--side">
+                <div class="svc-panel-stat-block">
+                  <span class="svc-stat-val">+100</span>
+                  <span class="svc-stat-lbl">eventos realizados</span>
+                </div>
+                <a href="#agendamento" class="svc-cta">
+                  Planear evento
+                  <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+                    <path d="M2 6.5h9M7 2l4.5 4.5L7 11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
                 </a>
               </div>
             </div>
-          </article>
+          </div>
 
-          <!-- ══ 03 ── Formação Executiva ══ -->
-          <article class="svc-card" role="listitem" data-svc="2">
-            <button class="svc-card-btn" aria-expanded="false" aria-controls="svc-panel-2">
-              <div class="svc-card-top">
-                <span class="svc-card-num" aria-hidden="true">03</span>
-                <span class="svc-card-icon" aria-hidden="true">
-                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                    <path d="M10 3L2 7l8 4 8-4-8-4z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-                    <path d="M2 7v6M18 7v6M6 9.5v4a4 4 0 0 0 8 0v-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                  </svg>
-                </span>
-              </div>
-              <h3 class="svc-card-title">Formação<br>Executiva</h3>
-              <p class="svc-card-tagline">Conhecimento que transforma equipas e negócios.</p>
-              <div class="svc-card-arrow" aria-hidden="true">
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </div>
-            </button>
-            <div class="svc-card-panel" id="svc-panel-2" role="region" aria-label="Formação Executiva" hidden>
-              <div class="svc-panel-content">
-                <div class="svc-panel-block">
-                  <span class="svc-panel-label">Áreas de formação</span>
-                  <ul class="svc-panel-list">
+          <!-- Panel 03 — Formação -->
+          <div class="svc-panel" id="svc-panel-2"
+               role="tabpanel" aria-labelledby="svc-tab-2">
+            <div class="svc-panel-inner">
+              <div class="svc-panel-col svc-panel-col--main">
+                <div class="svc-panel-group">
+                  <span class="svc-group-label">Áreas de formação</span>
+                  <ul class="svc-list">
                     <li>Marketing estratégico</li>
                     <li>Marketing digital</li>
                     <li>Inteligência Artificial para negócios</li>
@@ -155,64 +183,72 @@
                     <li>Empreendedorismo e franquias</li>
                   </ul>
                 </div>
-                <div class="svc-panel-block">
-                  <span class="svc-panel-label">Formatos</span>
-                  <div class="svc-tags-row">
-                    <span class="svc-ftag">Workshops</span>
-                    <span class="svc-ftag">Bootcamps</span>
-                    <span class="svc-ftag">Programas corporativos</span>
-                    <span class="svc-ftag">In-company</span>
+              </div>
+              <div class="svc-panel-col svc-panel-col--side">
+                <div class="svc-panel-group">
+                  <span class="svc-group-label">Formatos disponíveis</span>
+                  <div class="svc-format-grid">
+                    <div class="svc-format-card">
+                      <span class="svc-format-name">Workshops</span>
+                      <span class="svc-format-desc">Sessões práticas e intensivas</span>
+                    </div>
+                    <div class="svc-format-card">
+                      <span class="svc-format-name">Bootcamps</span>
+                      <span class="svc-format-desc">Imersão acelerada</span>
+                    </div>
+                    <div class="svc-format-card">
+                      <span class="svc-format-name">Programas Corporativos</span>
+                      <span class="svc-format-desc">Formação à medida da empresa</span>
+                    </div>
+                    <div class="svc-format-card">
+                      <span class="svc-format-name">In-Company</span>
+                      <span class="svc-format-desc">Na sede da sua organização</span>
+                    </div>
                   </div>
                 </div>
-                <a href="#agendamento" class="svc-panel-cta">
-                  Iniciar projecto
-                  <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M2 6.5h9M6.5 2l4.5 4.5-4.5 4.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <a href="#agendamento" class="svc-cta">
+                  Solicitar formação
+                  <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+                    <path d="M2 6.5h9M7 2l4.5 4.5L7 11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
                 </a>
               </div>
             </div>
-          </article>
+          </div>
 
-          <!-- ══ 04 ── Soluções Digitais ══ -->
-          <article class="svc-card" role="listitem" data-svc="3">
-            <button class="svc-card-btn" aria-expanded="false" aria-controls="svc-panel-3">
-              <div class="svc-card-top">
-                <span class="svc-card-num" aria-hidden="true">04</span>
-                <span class="svc-card-icon" aria-hidden="true">
-                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                    <rect x="3" y="4" width="14" height="10" rx="1.5" stroke="currentColor" stroke-width="1.5"/>
-                    <path d="M7 17h6M10 14v3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                    <path d="M7 9l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </span>
-              </div>
-              <h3 class="svc-card-title">Soluções<br>Digitais</h3>
-              <p class="svc-card-tagline">Infraestrutura digital que credibiliza e converte.</p>
-              <div class="svc-card-arrow" aria-hidden="true">
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </div>
-            </button>
-            <div class="svc-card-panel" id="svc-panel-3" role="region" aria-label="Soluções Digitais" hidden>
-              <div class="svc-panel-content">
-                <div class="svc-panel-block">
-                  <span class="svc-panel-label">Produtos digitais</span>
-                  <ul class="svc-panel-list">
+          <!-- Panel 04 — Digital -->
+          <div class="svc-panel" id="svc-panel-3"
+               role="tabpanel" aria-labelledby="svc-tab-3">
+            <div class="svc-panel-inner">
+              <div class="svc-panel-col svc-panel-col--main">
+                <div class="svc-panel-group">
+                  <span class="svc-group-label">Produtos digitais</span>
+                  <ul class="svc-list">
                     <li>Criação de websites</li>
                     <li>Plataformas empresariais</li>
                     <li>Automação de marketing</li>
                     <li>Integração com WhatsApp e CRM</li>
                     <li>Desenvolvimento de apps simples</li>
-                    <li>Sistemas USSD e offline (contexto Angola)</li>
+                    <li>Sistemas USSD e offline — contexto Angola</li>
                   </ul>
                 </div>
-                <a href="#agendamento" class="svc-panel-cta">
+              </div>
+              <div class="svc-panel-col svc-panel-col--side">
+                <div class="svc-panel-stat-block">
+                  <span class="svc-stat-val">100%</span>
+                  <span class="svc-stat-lbl">adaptado ao mercado angolano</span>
+                </div>
+                <a href="#agendamento" class="svc-cta">
                   Iniciar projecto
-                  <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M2 6.5h9M6.5 2l4.5 4.5-4.5 4.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+                    <path d="M2 6.5h9M7 2l4.5 4.5L7 11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
                 </a>
               </div>
             </div>
-          </article>
+          </div>
 
-        </div><!-- /svc-grid -->
+        </div><!-- /svc-panels -->
 
       </div><!-- /container -->
 
@@ -220,107 +256,66 @@
       (function () {
         'use strict';
 
-        var cards = document.querySelectorAll('.svc-card');
-        if (!cards.length) return;
+        var tabs   = Array.prototype.slice.call(document.querySelectorAll('.svc-tab'));
+        var panels = Array.prototype.slice.call(document.querySelectorAll('.svc-panel'));
 
-        /* Stagger entrance animation */
-        cards.forEach(function (card, i) {
-          card.style.opacity = '0';
-          card.style.transform = 'translateY(24px)';
-          setTimeout(function () {
-            card.style.transition = 'opacity 480ms ease, transform 480ms ease';
-            card.style.opacity = '1';
-            card.style.transform = 'none';
-          }, 100 + i * 90);
-        });
+        if (!tabs.length || !panels.length) return;
 
-        function staggerIn(panel) {
-          var items = panel.querySelectorAll('.svc-panel-list li, .svc-pkg, .svc-ftag');
-          items.forEach(function (el, i) {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(8px)';
-            el.style.transition = 'none';
-            setTimeout(function () {
-              el.style.transition = 'opacity 260ms ease, transform 260ms ease';
-              el.style.opacity = '1';
-              el.style.transform = 'none';
-            }, 80 + i * 50);
+        function activate(idx) {
+          tabs.forEach(function (t, i) {
+            var isActive = (i === idx);
+            t.setAttribute('aria-selected', isActive ? 'true' : 'false');
+            t.classList.toggle('svc-tab--active', isActive);
           });
-          var cta = panel.querySelector('.svc-panel-cta');
-          if (cta) {
-            cta.style.opacity = '0';
-            cta.style.transition = 'none';
-            setTimeout(function () {
-              cta.style.transition = 'opacity 280ms ease';
-              cta.style.opacity = '1';
-            }, 350);
-          }
-        }
 
-        function openCard(card) {
-          var btn   = card.querySelector('.svc-card-btn');
-          var panel = document.getElementById(btn.getAttribute('aria-controls'));
-          if (!panel) return;
-
-          var isOpen = btn.getAttribute('aria-expanded') === 'true';
-
-          /* Close all */
-          cards.forEach(function (c) {
-            var b = c.querySelector('.svc-card-btn');
-            var p = document.getElementById(b.getAttribute('aria-controls'));
-            if (!p) return;
-            if (b.getAttribute('aria-expanded') === 'true') {
-              b.setAttribute('aria-expanded', 'false');
-              b.classList.remove('active');
-              c.classList.remove('svc-card--open');
-              p.style.maxHeight = p.scrollHeight + 'px';
-              requestAnimationFrame(function () {
-                p.style.maxHeight = '0';
+          panels.forEach(function (p, i) {
+            if (i === idx) {
+              p.classList.add('svc-panel--enter');
+              p.classList.add('svc-panel--active');
+              /* Trigger reflow so transition fires */
+              void p.offsetWidth;
+              p.classList.remove('svc-panel--enter');
+              /* Stagger list items */
+              var items = p.querySelectorAll('.svc-list li, .svc-pkg, .svc-format-card');
+              items.forEach(function (el, j) {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(10px)';
+                el.style.transition = 'none';
+                setTimeout(function () {
+                  el.style.transition = 'opacity 300ms ease, transform 300ms ease';
+                  el.style.opacity = '1';
+                  el.style.transform = 'none';
+                }, 60 + j * 55);
               });
-              p.addEventListener('transitionend', function onDone(e) {
-                if (e.propertyName !== 'max-height') return;
-                p.setAttribute('hidden', '');
-                p.style.maxHeight = '';
-                p.removeEventListener('transitionend', onDone);
-              });
+              var stat = p.querySelector('.svc-stat-val');
+              if (stat) {
+                stat.style.opacity = '0';
+                stat.style.transform = 'translateY(12px)';
+                stat.style.transition = 'none';
+                setTimeout(function () {
+                  stat.style.transition = 'opacity 360ms ease, transform 360ms ease';
+                  stat.style.opacity = '1';
+                  stat.style.transform = 'none';
+                }, 80);
+              }
+            } else {
+              p.classList.remove('svc-panel--active');
+              p.classList.remove('svc-panel--enter');
             }
           });
-
-          if (!isOpen) {
-            btn.setAttribute('aria-expanded', 'true');
-            btn.classList.add('active');
-            card.classList.add('svc-card--open');
-            panel.removeAttribute('hidden');
-            panel.style.maxHeight = '0';
-            panel.style.overflow = 'hidden';
-            requestAnimationFrame(function () {
-              panel.style.transition = 'max-height 440ms cubic-bezier(.4,0,.2,1)';
-              panel.style.maxHeight = panel.scrollHeight + 'px';
-            });
-            panel.addEventListener('transitionend', function onOpen(e) {
-              if (e.propertyName !== 'max-height') return;
-              panel.style.maxHeight = '';
-              panel.style.overflow = '';
-              panel.style.transition = '';
-              panel.removeEventListener('transitionend', onOpen);
-              staggerIn(panel);
-            });
-          }
         }
 
-        cards.forEach(function (card) {
-          var btn = card.querySelector('.svc-card-btn');
-          btn.addEventListener('click', function () { openCard(card); });
+        tabs.forEach(function (tab, i) {
+          tab.addEventListener('click', function () { activate(i); });
+          /* Keyboard navigation */
+          tab.addEventListener('keydown', function (e) {
+            if (e.key === 'ArrowRight') { activate((i + 1) % tabs.length); tabs[(i + 1) % tabs.length].focus(); }
+            if (e.key === 'ArrowLeft')  { activate((i - 1 + tabs.length) % tabs.length); tabs[(i - 1 + tabs.length) % tabs.length].focus(); }
+          });
         });
 
-        /* Open first card without animation */
-        var firstPanel = document.getElementById(
-          cards[0].querySelector('.svc-card-btn').getAttribute('aria-controls')
-        );
-        if (firstPanel) {
-          firstPanel.removeAttribute('hidden');
-          cards[0].classList.add('svc-card--open');
-        }
+        /* Initialise first tab */
+        activate(0);
 
       })();
       </script>
