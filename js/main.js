@@ -1,5 +1,56 @@
     'use strict';
 
+    /* ── Serviços — Tab-panel ── */
+    (function () {
+      var tabs   = Array.prototype.slice.call(document.querySelectorAll('.svc-tab'));
+      var panels = Array.prototype.slice.call(document.querySelectorAll('.svc-panel'));
+      if (!tabs.length || !panels.length) return;
+
+      function activate(idx) {
+        tabs.forEach(function (t, i) {
+          var active = (i === idx);
+          t.setAttribute('aria-selected', active ? 'true' : 'false');
+          t.classList.toggle('svc-tab--active', active);
+        });
+        panels.forEach(function (p, i) {
+          if (i === idx) {
+            p.style.display = 'block';
+            p.style.animation = 'none';
+            void p.offsetWidth; /* force reflow */
+            p.style.animation = '';
+            p.classList.add('svc-panel--active');
+            var els = p.querySelectorAll('.svc-list li, .svc-pkg, .svc-format-card');
+            els.forEach(function (el, j) {
+              el.style.cssText = 'opacity:0;transform:translateY(10px);transition:none';
+              setTimeout(function () {
+                el.style.cssText = 'opacity:1;transform:none;transition:opacity 280ms ease,transform 280ms ease';
+              }, 50 + j * 50);
+            });
+            var stat = p.querySelector('.svc-stat-val');
+            if (stat) {
+              stat.style.cssText = 'opacity:0;transform:translateY(12px);transition:none';
+              setTimeout(function () {
+                stat.style.cssText = 'opacity:1;transform:none;transition:opacity 340ms ease,transform 340ms ease';
+              }, 60);
+            }
+          } else {
+            p.classList.remove('svc-panel--active');
+            p.style.display = 'none';
+          }
+        });
+      }
+
+      tabs.forEach(function (tab, i) {
+        tab.addEventListener('click', function () { activate(i); });
+        tab.addEventListener('keydown', function (e) {
+          if (e.key === 'ArrowRight') { activate((i + 1) % tabs.length); tabs[(i + 1) % tabs.length].focus(); }
+          if (e.key === 'ArrowLeft')  { var p = (i - 1 + tabs.length) % tabs.length; activate(p); tabs[p].focus(); }
+        });
+      });
+
+      activate(0);
+    })();
+
     /* Eventos — animação de entrada escalonada */
     (function() {
       const cards = document.querySelectorAll('.evento-anim');
