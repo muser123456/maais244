@@ -2003,6 +2003,11 @@
       grid-template-rows: 260px 220px 260px;
       gap: 6px;
     }
+    @keyframes pfReveal {
+      from { opacity: 0; transform: scale(.96) translateY(16px); }
+      to   { opacity: 1; transform: scale(1)  translateY(0); }
+    }
+
     .pf-item {
       position: relative;
       overflow: hidden;
@@ -2010,7 +2015,19 @@
       background: rgba(255,255,255,.04);
       border: 1px solid rgba(255,255,255,.06);
       cursor: pointer;
+      opacity: 0;
     }
+    .pf-item.pf-visible {
+      animation: pfReveal 560ms cubic-bezier(.22,.68,0,1.05) both;
+    }
+    .pf-item.pf-visible:nth-child(1) { animation-delay:   0ms; }
+    .pf-item.pf-visible:nth-child(2) { animation-delay:  80ms; }
+    .pf-item.pf-visible:nth-child(3) { animation-delay: 160ms; }
+    .pf-item.pf-visible:nth-child(4) { animation-delay: 240ms; }
+    .pf-item.pf-visible:nth-child(5) { animation-delay: 320ms; }
+    .pf-item.pf-visible:nth-child(6) { animation-delay: 400ms; }
+    .pf-item.pf-visible:nth-child(7) { animation-delay: 480ms; }
+    .pf-item.pf-visible:nth-child(8) { animation-delay: 560ms; }
 
     /* Linha 1: item1 largo + item2 */
     .pf-item-1 { grid-column: span 2; }
@@ -2091,7 +2108,8 @@
       .agendamento-layout { grid-template-columns: 1fr; }
       .footer-grid { grid-template-columns: repeat(2, 1fr); }
       .portfolio-grid { grid-template-columns: repeat(2, 1fr); grid-template-rows: auto; }
-      .pf-item-1, .pf-item-4 { grid-column: span 1; }
+      .pf-item-1, .pf-item-4, .pf-item-8 { grid-column: span 1; }
+      .portfolio-grid .pf-item { min-height: 200px; }
     }
 
     @media (max-width: 768px) {
@@ -2103,7 +2121,8 @@
       .form-row { grid-template-columns: 1fr; }
       .footer-grid { grid-template-columns: 1fr; }
       .eventos-grid { grid-template-columns: 1fr; }
-      .portfolio-grid { grid-template-columns: 1fr; }
-      .pf-item-1, .pf-item-4 { grid-column: span 1; }
+      .portfolio-grid { grid-template-columns: repeat(2, 1fr); grid-template-rows: auto; }
+      .pf-item-1, .pf-item-4, .pf-item-8 { grid-column: span 1; }
+      .portfolio-grid .pf-item { min-height: 160px; }
       .portfolio-intro { flex-direction: column; align-items: flex-start; }
     }
